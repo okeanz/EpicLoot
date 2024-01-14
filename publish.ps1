@@ -66,5 +66,27 @@ if($Target.Equals("Release")) {
     Compress-Archive -Path "$PackagePath\*" -DestinationPath "$TargetPath\$TargetAssembly.zip" -Force
 }
 
+$Libs = "$ProjectPath\Resources\Libs"
+$Configs = "$ProjectPath\Resources\config"
+$DLL = "$TargetPath\$TargetAssembly"
+
+$LGH = "C:\GitHub\LootGoblinsHeim\package\EpicLoot"
+
+$DevPlugins = "C:\Users\User\AppData\Roaming\r2modmanPlus-local\Valheim\profiles\dev1\BepInEx\plugins"
+$DevPluginFoldername = "EpicLoot"
+$DevPluginsFolder = "$DevPlugins\$DevPluginFoldername"
+
+Copy-Item -Path "$Libs\*" -Destination "$LGH"
+Copy-Item -Path "$Configs\*" -Destination "$LGH"
+Copy-Item -Path "$DLL" -Destination "$LGH"
+
+if(!(Test-Path -Path $DevPluginsFolder)){
+    New-Item -Path "$DevPlugins\" -Name "$DevPluginFoldername" -ItemType "directory"
+}
+
+Copy-Item -Path "$Libs\*" -Destination "$DevPluginsFolder"
+Copy-Item -Path "$Configs\*" -Destination "$DevPluginsFolder"
+Copy-Item -Path "$DLL" -Destination "$DevPluginsFolder"
+
 # Pop Location
 Pop-Location

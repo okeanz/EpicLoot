@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\JotunnLib.2.15.0\build\JotunnLib.props" Condition="Exists('..\packages\JotunnLib.2.15.0\build\JotunnLib.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DEAF4438-8089-40ED-8175-398E1261D45B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EpicLoot</RootNamespace>
+    <AssemblyName>EpicLoot</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+    <LangVersion>10</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+    <StartAction>Program</StartAction>
+    <StartProgram>$(VALHEIM_INSTALL)\valheim.exe</StartProgram>
+    <StartArguments>-console</StartArguments>
+    <StartWorkingDirectory>$(VALHEIM_INSTALL)</StartWorkingDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HarmonyX.2.9.0\lib\net45\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="AdventureBackpacksAPI, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>Resources\Libs\AdventureBackpacksAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="AnimationSpeedManager, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>Resources\Libs\AnimationSpeedManager.dll</HintPath>
+    </Reference>
+    <Reference Include="assembly_guiutils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Valheim\valheim_Data\Managed\publicized_assemblies\assembly_guiutils_publicized.dll</HintPath>
+    </Reference>
+    <Reference Include="assembly_utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Valheim\valheim_Data\Managed\publicized_assemblies\assembly_utils_publicized.dll</HintPath>
+    </Reference>
+    <Reference Include="assembly_valheim, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Valheim\valheim_Data\Managed\publicized_assemblies\assembly_valheim_publicized.dll</HintPath>
+    </Reference>
+    <Reference Include="AugaAPI, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>Resources\Libs\AugaAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="CreatureLevelControlAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>Resources\Libs\CreatureLevelControlAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="EpicLoot-UnityLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>Resources\Libs\EpicLoot-UnityLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Jotunn, Version=2.15.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JotunnLib.2.15.0\lib\net462\Jotunn.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod, Version=21.9.19.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoMod.21.9.19.1\lib\net40\MonoMod.exe</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour, Version=22.1.29.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoMod.RuntimeDetour.22.1.29.1\lib\net452\MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Utils, Version=22.1.29.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoMod.Utils.22.1.29.1\lib\net452\MonoMod.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ServerSync, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>Resources\Libs\ServerSync.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseEL\Abilities\Ability.cs" />
+    <Compile Include="BaseEL\Abilities\AbilityBar.cs" />
+    <Compile Include="BaseEL\Abilities\AbilityConfig.cs" />
+    <Compile Include="BaseEL\Abilities\AbilityController.cs" />
+    <Compile Include="BaseEL\Abilities\AbilityDefinitions.cs" />
+    <Compile Include="BaseEL\Abilities\AbilityFactory.cs" />
+    <Compile Include="BaseEL\Abilities\PlayerExtensions_Abilities.cs" />
+    <Compile Include="BaseEL\Adventure\AbandonBountyDialog.cs" />
+    <Compile Include="BaseEL\Adventure\AdventureComponent.cs" />
+    <Compile Include="BaseEL\Adventure\AdventureDataConfig.cs" />
+    <Compile Include="BaseEL\Adventure\AdventureDataManager.cs" />
+    <Compile Include="BaseEL\Adventure\AdventureSaveData.cs" />
+    <Compile Include="BaseEL\Adventure\BaseMerchantPanelListElement.cs" />
+    <Compile Include="BaseEL\Adventure\BountyListElement.cs" />
+    <Compile Include="BaseEL\Adventure\BountyManagmentSystem.cs" />
+    <Compile Include="BaseEL\Adventure\BountyTarget.cs" />
+    <Compile Include="BaseEL\Adventure\BuyListElement.cs" />
+    <Compile Include="BaseEL\Adventure\CharacterDrop_Patch.cs" />
+    <Compile Include="BaseEL\Adventure\Feature\AdventureFeature.cs" />
+    <Compile Include="BaseEL\Adventure\Feature\Bosses.cs" />
+    <Compile Include="BaseEL\Adventure\Feature\Bounties.cs" />
+    <Compile Include="BaseEL\Adventure\Feature\BountiesListPanel.cs" />
+    <Compile Include="BaseEL\Adventure\Feature\BountyLedger.cs" />
+    <Compile Include="BaseEL\Adventure\Feature\Gamble.cs" />
+    <Compile Include="BaseEL\Adventure\Feature\GambleListPanel.cs" />
+    <Compile Include="BaseEL\Adventure\Feature\MerchantListPanel.cs" />
+    <Compile Include="BaseEL\Adventure\Feature\SecretStash.cs" />
+    <Compile Include="BaseEL\Adventure\Feature\SecretStashListPanel.cs" />
+    <Compile Include="BaseEL\Adventure\Feature\TreasureMapListPanel.cs" />
+    <Compile Include="BaseEL\Adventure\Feature\TreasureMaps.cs" />
+    <Compile Include="BaseEL\Adventure\Game_Patch.cs" />
+    <Compile Include="BaseEL\Adventure\MerchantPanel.cs" />
+    <Compile Include="BaseEL\Adventure\MessageHud_Patch.cs" />
+    <Compile Include="BaseEL\Adventure\MinimapController.cs" />
+    <Compile Include="BaseEL\Adventure\PlayerExtensions_Adventure.cs" />
+    <Compile Include="BaseEL\Adventure\SE_CustomFinder.cs" />
+    <Compile Include="BaseEL\Adventure\StoreGui_Patch.cs" />
+    <Compile Include="BaseEL\Adventure\TreasureMapChest.cs" />
+    <Compile Include="BaseEL\Adventure\TreasureMapListElement.cs" />
+    <Compile Include="BaseEL\Assets.cs" />
+    <Compile Include="BaseEL\Attack_Patch.cs" />
+    <Compile Include="BaseEL\BossDropMode.cs" />
+    <Compile Include="BaseEL\CharacterDrop_Patch.cs" />
+    <Compile Include="BaseEL\Common\ConfigPositionedElement.cs" />
+    <Compile Include="BaseEL\Common\Consumables.cs" />
+    <Compile Include="BaseEL\Common\GameObjectExtensions.cs" />
+    <Compile Include="BaseEL\Common\GotDestroyed.cs" />
+    <Compile Include="BaseEL\Common\MultiValueDictionary.cs" />
+    <Compile Include="BaseEL\Common\PlayerExtensions.cs" />
+    <Compile Include="BaseEL\Common\PrefabCreator.cs" />
+    <Compile Include="BaseEL\Common\SerializableVector3.cs" />
+    <Compile Include="BaseEL\Common\Utils.cs" />
+    <Compile Include="BaseEL\Common\WeightedRandomCollection.cs" />
+    <Compile Include="BaseEL\Container_Patch.cs" />
+    <Compile Include="BaseEL\CraftingV2\EnchantingTable_Patch.cs" />
+    <Compile Include="BaseEL\CraftingV2\EnchantingUIAugaFixup.cs" />
+    <Compile Include="BaseEL\CraftingV2\EnchantingUIController.cs" />
+    <Compile Include="BaseEL\CraftingV2\EnchantingUI_Patches.cs" />
+    <Compile Include="BaseEL\CraftingV2\MaterialConversions.cs" />
+    <Compile Include="BaseEL\Crafting\AugmentChoiceDialog.cs" />
+    <Compile Include="BaseEL\Crafting\AugmentHelper.cs" />
+    <Compile Include="BaseEL\Crafting\AugmentsAvailableDialog.cs" />
+    <Compile Include="BaseEL\Crafting\CraftingItemExtensions.cs" />
+    <Compile Include="BaseEL\Crafting\CraftingTabs.cs" />
+    <Compile Include="BaseEL\Crafting\CraftSuccessDialog.cs" />
+    <Compile Include="BaseEL\Crafting\EnchantCostsConfig.cs" />
+    <Compile Include="BaseEL\Crafting\EnchantCostsHelper.cs" />
+    <Compile Include="BaseEL\Crafting\EnchantHelper.cs" />
+    <Compile Include="BaseEL\Crafting\ItemDrop_Patch.cs" />
+    <Compile Include="BaseEL\Crafting\Player_patch.cs" />
+    <Compile Include="BaseEL\Crafting\RecipesHelper.cs" />
+    <Compile Include="BaseEL\Crafting\TransferMagicalEffects.cs" />
+    <Compile Include="BaseEL\Data\ConfigValue.cs" />
+    <Compile Include="BaseEL\Data\CustomDataManager.cs" />
+    <Compile Include="BaseEL\Data\EIDFLegacy.cs" />
+    <Compile Include="BaseEL\DebugText.cs" />
+    <Compile Include="BaseEL\EpicLootBase.cs" />
+    <Compile Include="BaseEL\EpicLootAuga.cs" />
+    <Compile Include="BaseEL\GameCamera_Patch.cs" />
+    <Compile Include="BaseEL\GatedBountyMode.cs" />
+    <Compile Include="BaseEL\GatedItemType\GatedItemTypeHelper.cs" />
+    <Compile Include="BaseEL\GatedItemType\ItemInfoConfig.cs" />
+    <Compile Include="BaseEL\Healing\AddHealingQueueToPlayerPatch.cs" />
+    <Compile Include="BaseEL\Healing\HealingQueueMono.cs" />
+    <Compile Include="BaseEL\Humanoid_Patch.cs" />
+    <Compile Include="BaseEL\Integrations\HarmonyPatches\ArmorStand_Patch.cs" />
+    <Compile Include="BaseEL\Integrations\HarmonyPatches\ItemStand_Patch.cs" />
+    <Compile Include="BaseEL\ItemDrop_Patch.cs" />
+    <Compile Include="BaseEL\ItemDrop_Patch_MagicItemTooltip.cs" />
+    <Compile Include="BaseEL\LegendarySystem\LegendaryItemConfig.cs" />
+    <Compile Include="BaseEL\LegendarySystem\UniqueLegendaryHelper.cs" />
+    <Compile Include="BaseEL\LogLevel.cs" />
+    <Compile Include="BaseEL\LootBeams\AlwaysPointUp.cs" />
+    <Compile Include="BaseEL\LootBeams\BeamColorSetter.cs" />
+    <Compile Include="BaseEL\LootBeams\LootBeam.cs" />
+    <Compile Include="BaseEL\LootConfig.cs" />
+    <Compile Include="BaseEL\LootRoller.cs" />
+    <Compile Include="BaseEL\MagicItem.cs" />
+    <Compile Include="BaseEL\MagicItemComponent.cs" />
+    <Compile Include="BaseEL\MagicItemEffectDefinition.cs" />
+    <Compile Include="BaseEL\MagicItemEffectDefinitions_Setup.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\AddCarryWeight.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\AddLifeSteal.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\AddSkillLevel.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\AvoidDamageTaken.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\Comfortable.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\DoubleJump.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\Executioner.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ExplosiveArrows.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\FeatherFall.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\FreeBuild.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\FrostAOE.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\Immovable.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\IncreaseEitr.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\IncreaseHealth.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\IncreaseStamina.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\Indestructible.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\MagicEffectsHelper.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyArmor.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyAttackSpeed.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyAttackStamina.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyBackstab.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyBlockPower.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyBlockStaminaUse.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyDamage.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyDiscoveryRadius.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyDurability.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyEitrRegen.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyHealthRegen.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyJumpStaminaUsage.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyMovementSpeed.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyParry.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyParryWindow.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyResistance.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyRunStaminaDrain.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyStaggerDamage.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyStaggerDuration.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyStaminaRegen.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ModifyWithLowHealth.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\MultiShot.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\Opportunist.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\Paralyze.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\QuickDraw.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\QuickLearner.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\RecallWeapon.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ReduceWeight.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\ReflectDamage.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\Riches.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\Slow.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\StaggerOnDamageTaken.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\Throwable.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\Undying.cs" />
+    <Compile Include="BaseEL\MagicItemEffects\Waterproof.cs" />
+    <Compile Include="BaseEL\MagicItemNames.cs" />
+    <Compile Include="BaseEL\Multiplayer_Player_Patch.cs" />
+    <Compile Include="BaseEL\ObjectDB_Patch.cs" />
+    <Compile Include="BaseEL\Patching\FilePatching.cs" />
+    <Compile Include="BaseEL\PieceDef.cs" />
+    <Compile Include="BaseEL\Terminal_Patch.cs" />
+    <Compile Include="BaseEL\TextsDialog_Patch.cs" />
+    <Compile Include="BaseEL\VisEquipment_Patch.cs" />
+    <Compile Include="BaseEL\WelcomeMessage.cs" />
+    <Compile Include="BaseEL\ZNetScene_Patch.cs" />
+    <Compile Include="BaseEL\ZNet_Patch.cs" />
+    <Compile Include="Properties\IgnoreAccessModifiers.cs" />
+    <Compile Include="EpicLoot.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Package\manifest.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BaseEL\Patching\testpatches.json" />
+    <Content Include="Package\icon.png" />
+    <Content Include="Resources\config\abilities.json" />
+    <Content Include="Resources\config\adventuredata.json" />
+    <Content Include="Resources\config\enchantcosts.json" />
+    <Content Include="Resources\config\enchantingupgrades.json" />
+    <Content Include="Resources\config\iteminfo.json" />
+    <Content Include="Resources\config\itemnames.json" />
+    <Content Include="Resources\config\legendaries.json" />
+    <Content Include="Resources\config\loottables.json" />
+    <Content Include="Resources\config\magiceffects.json" />
+    <Content Include="Resources\config\manifest.json" />
+    <Content Include="Resources\config\materialconversions.json" />
+    <Content Include="Resources\config\recipes.json" />
+    <Content Include="Resources\config\translations.json" />
+    <Content Include="Resources\EpicLoot-Header.png" />
+    <Content Include="Resources\EpicLoot-Tile.png" />
+    <Content Include="Resources\Libs\Newtonsoft.Json.dll" />
+    <EmbeddedResource Include="Resources\Libs\EpicLoot-UnityLib.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Libs\AdventureBackpacksAPI.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Libs\AnimationSpeedManager.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Libs\AugaAPI.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Libs\CreatureLevelControlAPI.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Libs\ServerSync.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Libs\System.Runtime.Serialization.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\assets\epicloot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Content Include="Resources\icon.png" />
+    <Content Include="Resources\info.md" />
+    <EmbeddedResource Include="Resources\assets\epiclootpieces">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="JotunnPostBuildTaskWin" Condition="'$(OS)' == 'Windows_NT'">
+    <Exec Command="powershell.exe -ExecutionPolicy RemoteSigned -File &quot;$(SolutionDir)publish.ps1&quot; -Target &quot;$(ConfigurationName)&quot; -TargetPath &quot;$(TargetDir.TrimEnd('\'))&quot; -TargetAssembly &quot;$(TargetFileName)&quot; -ValheimPath &quot;$(VALHEIM_INSTALL.TrimEnd('\'))&quot; -DeployPath &quot;$(MOD_DEPLOYPATH.TrimEnd('\'))&quot; -ProjectPath &quot;$(ProjectDir.TrimEnd('\'))&quot; " />
+  </Target>
+  <PropertyGroup>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+    <BuildDependsOn>
+      $(BuildDependsOn);
+      JotunnPostBuildTaskWin
+    </BuildDependsOn>
+  </PropertyGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\JotunnLib.2.15.0\build\JotunnLib.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\JotunnLib.2.15.0\build\JotunnLib.props'))" />
+  </Target>
+</Project>
