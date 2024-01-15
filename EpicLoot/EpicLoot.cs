@@ -2,6 +2,7 @@ using System;
 using BepInEx;
 using BepInEx.Logging;
 using EpicLoot.BaseEL;
+using EpicLoot.Skill;
 using Jotunn.Entities;
 using Jotunn.Managers;
 using Jotunn.Utils;
@@ -15,7 +16,7 @@ namespace EpicLoot
     {
         public const string PluginGUID = "com.lootgoblinsheim.epicloot";
         public const string PluginName = "LGH.EpicLoot";
-        public const string PluginVersion = "0.0.1";
+        public const string PluginVersion = "0.0.2";
         
         // Use this class to add your own localization to the game
         // https://valheim-modding.github.io/Jotunn/tutorials/localization.html
@@ -30,11 +31,17 @@ namespace EpicLoot
             _epicLootBase = new EpicLootBase();
             _epicLootBase.Awake(Config, Logger);
             
+            Enchanting.AddEnchantingSkill();
         }
 
         private void Start()
         {
             _epicLootBase.Start();
+        }
+
+        private void Update()
+        {
+            _epicLootBase.Update();
         }
 
         private void OnDestroy()

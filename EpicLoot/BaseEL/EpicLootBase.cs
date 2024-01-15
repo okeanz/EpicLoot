@@ -18,6 +18,7 @@ using EpicLoot.BaseEL.GatedItemType;
 using EpicLoot.BaseEL.LegendarySystem;
 using EpicLoot.BaseEL.MagicItemEffects;
 using EpicLoot.BaseEL.Patching;
+using EpicLoot.Skill;
 using EpicLoot_UnityLib;
 using HarmonyLib;
 using JetBrains.Annotations;
@@ -434,6 +435,7 @@ namespace EpicLoot.BaseEL
             LoadJsonFile<AbilityConfig>("abilities.json", AbilityDefinitions.Initialize, ConfigType.Synced);
             LoadJsonFile<MaterialConversionsConfig>("materialconversions.json", MaterialConversions.Initialize, ConfigType.Synced);
             LoadJsonFile<EnchantingUpgradesConfig>("enchantingupgrades.json", EnchantingTableUpgrades.InitializeConfig, ConfigType.Synced);
+            LoadJsonFile<EnchantingSkillConfig>("enchantingskill.json", Enchanting.InitSkillConfig, ConfigType.Synced);
 
             WatchNewPatchConfig();
         }
@@ -520,33 +522,17 @@ namespace EpicLoot.BaseEL
             _instance.Logger.LogError(message);
         }
 
-        /*private void Update()
+
+        private float _lastUpdate;
+        public void Update()
         {
-            PointerEventData pointerData = new PointerEventData(EventSystem.current)
+            if (Time.time - _lastUpdate > 0.05f)
             {
-                position = Input.mousePosition
-            };
-
-            List<RaycastResult> results = new List<RaycastResult>();
-            EventSystem.current.RaycastAll(pointerData, results);
-
-            EpicLoot.LogWarning("== Objects under cursor: ==");
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                results.ForEach((result) => {
-                    EpicLoot.Log($"- {result.gameObject.name} ({result.gameObject.transform.parent.name})");
-                });
+                _lastUpdate = Time.time;
+                EnchantingUIController.RefreshEnchantRarityButtons();
             }
-        }*/
-
-        /*[UsedImplicitly]
-        private void Update()
-        {
-            if (Input.GetKey(KeyCode.RightControl) && Input.GetKeyDown(KeyCode.Backspace))
-            {
-                Time.timeScale = Time.timeScale == 0 ? 1 : 0;
-            }
-        }*/
+            
+        }
 
         private void LoadAssets()
         {

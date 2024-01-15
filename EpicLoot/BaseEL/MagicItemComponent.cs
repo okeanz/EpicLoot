@@ -12,6 +12,7 @@ using EpicLoot.BaseEL.Crafting;
 using EpicLoot.BaseEL.Data;
 using EpicLoot.BaseEL.LegendarySystem;
 using EpicLoot.BaseEL.MagicItemEffects;
+using EpicLoot.Skill;
 using HarmonyLib;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -19,6 +20,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using CodeInstruction = HarmonyLib.CodeInstruction;
 using Object = UnityEngine.Object;
+
 // ReSharper disable RedundantAssignment
 
 namespace EpicLoot.BaseEL
@@ -30,6 +32,7 @@ namespace EpicLoot.BaseEL
         public MagicItem MagicItem;
 
         protected override bool AllowStackingIdenticalValues { get; set; } = true;
+
         public void SetMagicItem(MagicItem magicItem)
         {
             if (magicItem == null)
@@ -62,7 +65,8 @@ namespace EpicLoot.BaseEL
             }
             catch (Exception)
             {
-                EpicLootBase.LogError($"[{nameof(MagicItemComponent)}] Could not deserialize MagicItem json data! ({Item?.m_shared?.m_name})"); 
+                EpicLootBase.LogError(
+                    $"[{nameof(MagicItemComponent)}] Could not deserialize MagicItem json data! ({Item?.m_shared?.m_name})");
                 throw;
             }
         }
@@ -105,7 +109,7 @@ namespace EpicLoot.BaseEL
             {
                 CheckForExtendedItemDataAndConvert();
             }
-            
+
             FixupValuelessEffects();
             SetMagicItem(MagicItem);
         }
@@ -143,7 +147,8 @@ namespace EpicLoot.BaseEL
 
             foreach (var effect in MagicItem.Effects)
             {
-                if (MagicItemEffectDefinitions.IsValuelessEffect(effect.EffectType, MagicItem.Rarity) && !Mathf.Approximately(effect.EffectValue, 1))
+                if (MagicItemEffectDefinitions.IsValuelessEffect(effect.EffectType, MagicItem.Rarity) &&
+                    !Mathf.Approximately(effect.EffectValue, 1))
                 {
                     EpicLootBase.Log($"Fixing up effect on {MagicItem.DisplayName}: effect={effect.EffectType}");
                     effect.EffectValue = 1;
@@ -287,11 +292,13 @@ namespace EpicLoot.BaseEL
             if (itemData.IsMagic())
             {
                 var magicItem = itemData.GetMagicItem();
-                if (magicItem.IsUniqueLegendary() && UniqueLegendaryHelper.TryGetLegendaryInfo(magicItem.LegendaryID, out var legendaryInfo))
+                if (magicItem.IsUniqueLegendary() &&
+                    UniqueLegendaryHelper.TryGetLegendaryInfo(magicItem.LegendaryID, out var legendaryInfo))
                 {
                     return legendaryInfo.Description;
                 }
             }
+
             return itemData.m_shared.m_description;
         }
 
@@ -307,7 +314,13 @@ namespace EpicLoot.BaseEL
                 return false;
             }
 
-            return itemData.GetMagicItem().Effects.Select(effect => MagicItemEffectDefinitions.Get(effect.EffectType)).Any(effectDef => effectDef.CanBeAugmented);
+            var magicItem = itemData.GetMagicItem();
+
+            if (!Enchanting.AugmentAvailableForPlayerSkill(magicItem))
+                return false;
+
+            return magicItem.Effects.Select(effect => MagicItemEffectDefinitions.Get(effect.EffectType))
+                .Any(effectDef => effectDef.CanBeAugmented);
         }
 
         public static string GetSetID(this ItemDrop.ItemData itemData, out bool isMundane)
@@ -388,7 +401,8 @@ namespace EpicLoot.BaseEL
             {
                 if (itemPrefab == null)
                 {
-                    EpicLootBase.LogError("Null Item left in ObjectDB! (This means that a prefab was deleted and not an instance)");
+                    EpicLootBase.LogError(
+                        "Null Item left in ObjectDB! (This means that a prefab was deleted and not an instance)");
                     continue;
                 }
 
@@ -414,7 +428,8 @@ namespace EpicLoot.BaseEL
             if (prefab != null)
             {
                 var itemDropPrefab = prefab.GetComponent<ItemDrop>();
-                if ((itemData.IsLegacyMagicItem() || EpicLootBase.CanBeMagicItem(itemDropPrefab.m_itemData)) && !itemData.IsExtended())
+                if ((itemData.IsLegacyMagicItem() || EpicLootBase.CanBeMagicItem(itemDropPrefab.m_itemData)) &&
+                    !itemData.IsExtended())
                 {
                     var instanceData = itemData.Data().Add<MagicItemComponent>();
 
@@ -427,6 +442,7 @@ namespace EpicLoot.BaseEL
                             instanceData.SetMagicItem(prefabData.MagicItem);
                         }
                     }
+
                     return itemDropPrefab.gameObject;
                 }
             }
@@ -449,7 +465,8 @@ namespace EpicLoot.BaseEL
                 var currentSetEquipped = Player.m_localPlayer.GetEquippedSetPieces(setID);
 
                 var setDisplayName = GetSetDisplayName(item, isMundane);
-                text.Append($"\n\n<color={EpicLootBase.GetSetItemColor()}> $mod_epicloot_set: {setDisplayName} ({currentSetEquipped.Count}/{setSize}):</color>");
+                text.Append(
+                    $"\n\n<color={EpicLootBase.GetSetItemColor()}> $mod_epicloot_set: {setDisplayName} ({currentSetEquipped.Count}/{setSize}):</color>");
 
                 foreach (var setItemName in setPieces)
                 {
@@ -461,9 +478,12 @@ namespace EpicLoot.BaseEL
 
                 if (isMundane)
                 {
-                    var setEffectColor = currentSetEquipped.Count == setSize ? EpicLootBase.GetSetItemColor() : "#808080ff";
+                    var setEffectColor = currentSetEquipped.Count == setSize
+                        ? EpicLootBase.GetSetItemColor()
+                        : "#808080ff";
                     var skillLevel = Player.m_localPlayer.GetSkillLevel(item.m_shared.m_skillType);
-                    text.Append($"\n<color={setEffectColor}>({setSize}) ‣ {item.GetSetStatusEffectTooltip(item.m_quality, skillLevel).Replace("\n", " ")}</color>");
+                    text.Append(
+                        $"\n<color={setEffectColor}>({setSize}) ‣ {item.GetSetStatusEffectTooltip(item.m_quality, skillLevel).Replace("\n", " ")}</color>");
                 }
                 else
                 {
@@ -474,15 +494,16 @@ namespace EpicLoot.BaseEL
                         var effectDef = MagicItemEffectDefinitions.Get(setBonusInfo.Effect.Type);
                         if (effectDef == null)
                         {
-                            EpicLootBase.LogError($"Set Tooltip: Could not find effect ({setBonusInfo.Effect.Type}) for set ({setInfo.ID}) bonus ({setBonusInfo.Count})!");
+                            EpicLootBase.LogError(
+                                $"Set Tooltip: Could not find effect ({setBonusInfo.Effect.Type}) for set ({setInfo.ID}) bonus ({setBonusInfo.Count})!");
                             continue;
                         }
 
                         var display = MagicItem.GetEffectText(effectDef, setBonusInfo.Effect.Values?.MinValue ?? 0);
-                        text.Append($"\n<color={(hasEquipped ? EpicLootBase.GetSetItemColor() : "#808080ff")}>({setBonusInfo.Count}) ‣ {display}</color>");
+                        text.Append(
+                            $"\n<color={(hasEquipped ? EpicLootBase.GetSetItemColor() : "#808080ff")}>({setBonusInfo.Count}) ‣ {display}</color>");
                     }
                 }
-
             }
             catch (Exception e)
             {
@@ -525,7 +546,8 @@ namespace EpicLoot.BaseEL
             }
         }
 
-        public static bool IsSetItemEquipped(List<ItemDrop.ItemData> currentSetEquipped, string setItemName, bool isMundane)
+        public static bool IsSetItemEquipped(List<ItemDrop.ItemData> currentSetEquipped, string setItemName,
+            bool isMundane)
         {
             if (isMundane)
             {
@@ -533,14 +555,16 @@ namespace EpicLoot.BaseEL
             }
             else
             {
-                return currentSetEquipped.Find(x => x.IsMagic(out var magicItem) && magicItem.LegendaryID == setItemName) != null;
+                return currentSetEquipped.Find(
+                    x => x.IsMagic(out var magicItem) && magicItem.LegendaryID == setItemName) != null;
             }
         }
     }
 
     public static class EquipmentEffectCache
     {
-        public static ConditionalWeakTable<Player, Dictionary<string, float?>> EquippedValues = new ConditionalWeakTable<Player, Dictionary<string, float?>>();
+        public static ConditionalWeakTable<Player, Dictionary<string, float?>> EquippedValues =
+            new ConditionalWeakTable<Player, Dictionary<string, float?>>();
 
         [HarmonyPatch(typeof(Humanoid), nameof(Humanoid.UnequipItem))]
         public static class EquipmentEffectCache_Humanoid_UnequipItem_Patch
@@ -627,7 +651,8 @@ namespace EpicLoot.BaseEL
                 {
                     if (count >= setBonusInfo.Count && (effectType == null || setBonusInfo.Effect.Type == effectType))
                     {
-                        var effect = new MagicItemEffect(setBonusInfo.Effect.Type, setBonusInfo.Effect.Values?.MinValue ?? MagicItemEffect.DefaultValue);
+                        var effect = new MagicItemEffect(setBonusInfo.Effect.Type,
+                            setBonusInfo.Effect.Values?.MinValue ?? MagicItemEffect.DefaultValue);
                         activeSetEffects.Add(effect);
                     }
                 }
@@ -653,7 +678,8 @@ namespace EpicLoot.BaseEL
             return sets;
         }
 
-        public static float GetTotalActiveMagicEffectValue(this Player player, string effectType, float scale = 1.0f, ItemDrop.ItemData ignoreThisItem = null)
+        public static float GetTotalActiveMagicEffectValue(this Player player, string effectType, float scale = 1.0f,
+            ItemDrop.ItemData ignoreThisItem = null)
         {
             var totalValue = scale * (EquipmentEffectCache.Get(player, effectType, () =>
             {
@@ -661,7 +687,8 @@ namespace EpicLoot.BaseEL
                 return allEffects.Count > 0 ? allEffects.Select(x => x.EffectValue).Sum() : null;
             }) ?? 0);
 
-            if (ignoreThisItem != null && player.IsItemEquiped(ignoreThisItem) && ignoreThisItem.IsMagic(out var magicItem))
+            if (ignoreThisItem != null && player.IsItemEquiped(ignoreThisItem) &&
+                ignoreThisItem.IsMagic(out var magicItem))
             {
                 totalValue -= magicItem.GetTotalEffectValue(effectType, scale);
             }
@@ -669,7 +696,8 @@ namespace EpicLoot.BaseEL
             return totalValue;
         }
 
-        public static bool HasActiveMagicEffect(this Player player, string effectType, ItemDrop.ItemData ignoreThisItem = null)
+        public static bool HasActiveMagicEffect(this Player player, string effectType,
+            ItemDrop.ItemData ignoreThisItem = null)
         {
             return GetTotalActiveMagicEffectValue(player, effectType, 1, ignoreThisItem) > 0;
         }
@@ -697,16 +725,19 @@ namespace EpicLoot.BaseEL
 
     public static class ItemBackgroundHelper
     {
-        public static Image CreateAndGetMagicItemBackgroundImage(GameObject elementGo, GameObject equipped, bool isInventoryGrid)
+        public static Image CreateAndGetMagicItemBackgroundImage(GameObject elementGo, GameObject equipped,
+            bool isInventoryGrid)
         {
-            var magicItemTransform = (RectTransform)elementGo.transform.Find("magicItem");
+            var magicItemTransform = (RectTransform) elementGo.transform.Find("magicItem");
             if (magicItemTransform == null)
             {
                 var magicItemObject = Object.Instantiate(equipped, equipped.transform.parent);
-                magicItemObject.transform.SetSiblingIndex(EpicLootBase.HasAuga ? equipped.transform.GetSiblingIndex() : equipped.transform.GetSiblingIndex() + 1);
+                magicItemObject.transform.SetSiblingIndex(EpicLootBase.HasAuga
+                    ? equipped.transform.GetSiblingIndex()
+                    : equipped.transform.GetSiblingIndex() + 1);
                 magicItemObject.name = "magicItem";
                 magicItemObject.SetActive(true);
-                magicItemTransform = (RectTransform)magicItemObject.transform;
+                magicItemTransform = (RectTransform) magicItemObject.transform;
                 magicItemTransform.anchorMin = magicItemTransform.anchorMax = new Vector2(0.5f, 0.5f);
                 magicItemTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 64);
                 magicItemTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 64);
@@ -720,14 +751,14 @@ namespace EpicLoot.BaseEL
             // Also add set item marker
             if (isInventoryGrid)
             {
-                var setItemTransform = (RectTransform)elementGo.transform.Find("setItem");
+                var setItemTransform = (RectTransform) elementGo.transform.Find("setItem");
                 if (setItemTransform == null)
                 {
                     var setItemObject = Object.Instantiate(equipped, equipped.transform.parent);
                     setItemObject.transform.SetAsLastSibling();
                     setItemObject.name = "setItem";
                     setItemObject.SetActive(true);
-                    setItemTransform = (RectTransform)setItemObject.transform;
+                    setItemTransform = (RectTransform) setItemObject.transform;
                     setItemTransform.anchorMin = setItemTransform.anchorMax = new Vector2(0.5f, 0.5f);
                     setItemTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 64);
                     setItemTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 64);
@@ -736,7 +767,9 @@ namespace EpicLoot.BaseEL
                     var setItemInit = setItemTransform.GetComponent<Image>();
                     setItemInit.raycastTarget = false;
                     setItemInit.sprite = EpicLootBase.GetSetItemSprite();
-                    setItemInit.color = ColorUtility.TryParseHtmlString(EpicLootBase.GetSetItemColor(), out var color) ? color : Color.white;
+                    setItemInit.color = ColorUtility.TryParseHtmlString(EpicLootBase.GetSetItemColor(), out var color)
+                        ? color
+                        : Color.white;
                 }
             }
 
@@ -752,8 +785,10 @@ namespace EpicLoot.BaseEL
                 rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
                 rectTransform.pivot = new Vector2(0.5f, 0.5f);
                 rectTransform.anchoredPosition = Vector2.zero;
-                rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, equippedImage.sprite.texture.width);
-                rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, equippedImage.sprite.texture.height);
+                rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal,
+                    equippedImage.sprite.texture.width);
+                rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,
+                    equippedImage.sprite.texture.height);
             }
 
             return magicItemTransform.GetComponent<Image>();
@@ -786,10 +821,12 @@ namespace EpicLoot.BaseEL
                 }
             }
         }
-   
+
         public static void UpdateGuiItems(ItemDrop.ItemData itemData, InventoryGrid.Element element)
         {
-            var magicItem = ItemBackgroundHelper.CreateAndGetMagicItemBackgroundImage(element.m_go, element.m_equiped.gameObject, true);
+            var magicItem =
+                ItemBackgroundHelper.CreateAndGetMagicItemBackgroundImage(element.m_go, element.m_equiped.gameObject,
+                    true);
             if (itemData.UseMagicBackground())
             {
                 magicItem.enabled = true;
@@ -811,7 +848,7 @@ namespace EpicLoot.BaseEL
                 }
             }
         }
-   
+
         [UsedImplicitly]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
@@ -827,16 +864,21 @@ namespace EpicLoot.BaseEL
                 return instruction;
             }
 
-            var elementUsedField = AccessTools.DeclaredField(typeof(InventoryGrid.Element), nameof(InventoryGrid.Element.m_used)); 
-            var elementQueuedField = AccessTools.DeclaredField(typeof(InventoryGrid.Element), nameof(InventoryGrid.Element.m_queued));
+            var elementUsedField =
+                AccessTools.DeclaredField(typeof(InventoryGrid.Element), nameof(InventoryGrid.Element.m_used));
+            var elementQueuedField =
+                AccessTools.DeclaredField(typeof(InventoryGrid.Element), nameof(InventoryGrid.Element.m_queued));
 
             for (int i = 0; i < instrs.Count; ++i)
             {
-                if (i > 6 && instrs[i].opcode == OpCodes.Stfld && instrs[i].operand.Equals(elementUsedField) && instrs[i-1].opcode == OpCodes.Ldc_I4_0
-                    && instrs[i-2].opcode == OpCodes.Call && instrs[i-3].opcode == OpCodes.Ldloca_S)
+                if (i > 6 && instrs[i].opcode == OpCodes.Stfld && instrs[i].operand.Equals(elementUsedField) &&
+                    instrs[i - 1].opcode == OpCodes.Ldc_I4_0
+                    && instrs[i - 2].opcode == OpCodes.Call && instrs[i - 3].opcode == OpCodes.Ldloca_S)
                 {
                     //Element Spot
-                    var callInstruction = new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(InventoryGrid_UpdateGui_MagicItemComponent_Patch), nameof(UpdateGuiElements)));
+                    var callInstruction = new CodeInstruction(OpCodes.Call,
+                        AccessTools.DeclaredMethod(typeof(InventoryGrid_UpdateGui_MagicItemComponent_Patch),
+                            nameof(UpdateGuiElements)));
                     //Move Any Labels from the instruction position being patched to new instruction.
                     if (instrs[i].labels.Count > 0)
                     {
@@ -846,14 +888,15 @@ namespace EpicLoot.BaseEL
                     //Get Element variable
                     yield return LogMessage(callInstruction);
                     counter++;
-                    
+
                     //Skip Stfld Instruction
                     i++;
 
                     successPatch1 = true;
-
-                } else if (i > 6 && instrs[i].opcode == OpCodes.Ldloc_S && instrs[i+1].opcode == OpCodes.Ldfld && instrs[i+1].operand.Equals(elementQueuedField)
-                           && instrs[i+2].opcode == OpCodes.Ldarg_1 && instrs[i+3].opcode == OpCodes.Call)
+                }
+                else if (i > 6 && instrs[i].opcode == OpCodes.Ldloc_S && instrs[i + 1].opcode == OpCodes.Ldfld &&
+                         instrs[i + 1].operand.Equals(elementQueuedField)
+                         && instrs[i + 2].opcode == OpCodes.Ldarg_1 && instrs[i + 3].opcode == OpCodes.Call)
                 {
                     //Item Spot
                     var elementOperand = instrs[i].operand;
@@ -869,21 +912,23 @@ namespace EpicLoot.BaseEL
                     //Get Item variable
                     yield return LogMessage(ldLocsInstruction);
                     counter++;
-        
+
                     //Get Element variable
-                    yield return LogMessage(new CodeInstruction(OpCodes.Ldloc_S,elementOperand));
+                    yield return LogMessage(new CodeInstruction(OpCodes.Ldloc_S, elementOperand));
                     counter++;
-        
+
                     //Patch Calling Method
-                    yield return LogMessage(new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(InventoryGrid_UpdateGui_MagicItemComponent_Patch), nameof(UpdateGuiItems))));
+                    yield return LogMessage(new CodeInstruction(OpCodes.Call,
+                        AccessTools.DeclaredMethod(typeof(InventoryGrid_UpdateGui_MagicItemComponent_Patch),
+                            nameof(UpdateGuiItems))));
                     counter++;
                     successPatch2 = true;
                 }
-                
+
                 yield return LogMessage(instrs[i]);
                 counter++;
             }
-            
+
             if (!successPatch2 || !successPatch1)
             {
                 EpicLootBase.LogError($"InventoryGrid.UpdateGui Transpiler Failed To Patch");
@@ -914,7 +959,8 @@ namespace EpicLoot.BaseEL
 
         public static void UpdateIcons(HotkeyBar.ElementData element, ItemDrop.ItemData itemData)
         {
-            var magicItem = ItemBackgroundHelper.CreateAndGetMagicItemBackgroundImage(element.m_go, element.m_equiped, false);
+            var magicItem =
+                ItemBackgroundHelper.CreateAndGetMagicItemBackgroundImage(element.m_go, element.m_equiped, false);
             if (itemData != null && itemData.UseMagicBackground())
             {
                 magicItem.enabled = true;
@@ -926,7 +972,7 @@ namespace EpicLoot.BaseEL
                 magicItem.enabled = false;
             }
         }
-        
+
         [UsedImplicitly]
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
@@ -942,19 +988,23 @@ namespace EpicLoot.BaseEL
                 return instruction;
             }
 
-            var elementDataEquipedField = AccessTools.DeclaredField(typeof(HotkeyBar.ElementData), nameof(HotkeyBar.ElementData.m_equiped)); 
-            var itemDataEquipedField = AccessTools.DeclaredField(typeof(ItemDrop.ItemData), nameof(ItemDrop.ItemData.m_equipped));
+            var elementDataEquipedField =
+                AccessTools.DeclaredField(typeof(HotkeyBar.ElementData), nameof(HotkeyBar.ElementData.m_equiped));
+            var itemDataEquipedField =
+                AccessTools.DeclaredField(typeof(ItemDrop.ItemData), nameof(ItemDrop.ItemData.m_equipped));
             var setActiveMethod = AccessTools.DeclaredMethod(typeof(GameObject), nameof(GameObject.SetActive));
-            var elementUsedField = AccessTools.DeclaredField(typeof(HotkeyBar.ElementData), nameof(HotkeyBar.ElementData.m_used)); 
+            var elementUsedField =
+                AccessTools.DeclaredField(typeof(HotkeyBar.ElementData), nameof(HotkeyBar.ElementData.m_used));
 
             for (int i = 0; i < instrs.Count; ++i)
             {
-
-                if (i > 6 && instrs[i].opcode == OpCodes.Stfld && instrs[i].operand.Equals(elementUsedField) && instrs[i-1].opcode == OpCodes.Ldc_I4_0
-                    && instrs[i-2].opcode == OpCodes.Call && instrs[i-3].opcode == OpCodes.Ldloca_S)
+                if (i > 6 && instrs[i].opcode == OpCodes.Stfld && instrs[i].operand.Equals(elementUsedField) &&
+                    instrs[i - 1].opcode == OpCodes.Ldc_I4_0
+                    && instrs[i - 2].opcode == OpCodes.Call && instrs[i - 3].opcode == OpCodes.Ldloca_S)
                 {
                     //Element Spot
-                    var callInstruction = new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(HotkeyBar_UpdateIcons_Patch), nameof(UpdateElements)));
+                    var callInstruction = new CodeInstruction(OpCodes.Call,
+                        AccessTools.DeclaredMethod(typeof(HotkeyBar_UpdateIcons_Patch), nameof(UpdateElements)));
                     //Move Any Labels from the instruction position being patched to new instruction.
                     if (instrs[i].labels.Count > 0)
                     {
@@ -964,23 +1014,25 @@ namespace EpicLoot.BaseEL
                     //Get Element variable
                     yield return LogMessage(callInstruction);
                     counter++;
-                    
+
                     //Skip Stfld Instruction
                     i++;
                     successPatch1 = true;
                 }
-                
+
                 yield return LogMessage(instrs[i]);
                 counter++;
 
-                if (i > 6 && instrs[i].opcode == OpCodes.Callvirt && instrs[i].operand.Equals(setActiveMethod) && instrs[i-1].opcode == OpCodes.Ldfld
-                    && instrs[i-1].operand.Equals(itemDataEquipedField) && instrs[i-2].opcode == OpCodes.Ldloc_S && instrs[i-3].opcode == OpCodes.Ldfld
-                    && instrs[i-3].operand.Equals(elementDataEquipedField) && instrs[i-4].opcode == OpCodes.Ldloc_S)
+                if (i > 6 && instrs[i].opcode == OpCodes.Callvirt && instrs[i].operand.Equals(setActiveMethod) &&
+                    instrs[i - 1].opcode == OpCodes.Ldfld
+                    && instrs[i - 1].operand.Equals(itemDataEquipedField) && instrs[i - 2].opcode == OpCodes.Ldloc_S &&
+                    instrs[i - 3].opcode == OpCodes.Ldfld
+                    && instrs[i - 3].operand.Equals(elementDataEquipedField) && instrs[i - 4].opcode == OpCodes.Ldloc_S)
                 {
                     var elementOperand = instrs[i - 4].operand;
                     var itemDataOperand = instrs[i - 2].operand;
-                    
-                    var ldLocInstruction = new CodeInstruction(OpCodes.Ldloc_S,elementOperand);
+
+                    var ldLocInstruction = new CodeInstruction(OpCodes.Ldloc_S, elementOperand);
                     //Move Any Labels from the instruction position being patched to new instruction.
                     if (instrs[i].labels.Count > 0)
                         instrs[i].MoveLabelsTo(ldLocInstruction);
@@ -988,18 +1040,19 @@ namespace EpicLoot.BaseEL
                     //Get Element
                     yield return LogMessage(ldLocInstruction);
                     counter++;
-                    
+
                     //Get Item Data
-                    yield return LogMessage(new CodeInstruction(OpCodes.Ldloc_S,itemDataOperand));
+                    yield return LogMessage(new CodeInstruction(OpCodes.Ldloc_S, itemDataOperand));
                     counter++;
-          
+
                     //Patch Calling Method
-                    yield return LogMessage(new CodeInstruction(OpCodes.Call, AccessTools.DeclaredMethod(typeof(HotkeyBar_UpdateIcons_Patch), nameof(UpdateIcons))));
+                    yield return LogMessage(new CodeInstruction(OpCodes.Call,
+                        AccessTools.DeclaredMethod(typeof(HotkeyBar_UpdateIcons_Patch), nameof(UpdateIcons))));
                     counter++;
                     successPatch2 = true;
                 }
             }
-            
+
             if (!successPatch2 || !successPatch1)
             {
                 EpicLootBase.LogError($"HotkeyBar.UpdateIcons Transpiler Failed To Patch");
@@ -1007,7 +1060,6 @@ namespace EpicLoot.BaseEL
                 EpicLootBase.LogError($"!successPatch2: {!successPatch2}");
                 Thread.Sleep(5000);
             }
-
         }
     }
 
@@ -1023,7 +1075,9 @@ namespace EpicLoot.BaseEL
                 {
                     if (equip.m_duration > 0.5f)
                     {
-                        name = equip.m_type == Player.MinorActionData.ActionType.Unequip ? "$hud_unequipping " + equip.m_item.GetDecoratedName() : "$hud_equipping " + equip.m_item.GetDecoratedName();
+                        name = equip.m_type == Player.MinorActionData.ActionType.Unequip
+                            ? "$hud_unequipping " + equip.m_item.GetDecoratedName()
+                            : "$hud_equipping " + equip.m_item.GetDecoratedName();
                     }
                 }
             }
@@ -1046,7 +1100,9 @@ namespace EpicLoot.BaseEL
             {
                 str = $"{str} x{__instance.m_itemData.m_stack}";
             }
-            __result = Localization.instance.Localize($"{str}\n[<color=yellow><b>$KEY_Use</b></color>] $inventory_pickup");
+
+            __result = Localization.instance.Localize(
+                $"{str}\n[<color=yellow><b>$KEY_Use</b></color>] $inventory_pickup");
             return false;
         }
 

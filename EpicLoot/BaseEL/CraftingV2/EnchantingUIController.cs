@@ -5,10 +5,12 @@ using System.Text;
 using System.Text.RegularExpressions;
 using EpicLoot.BaseEL.Crafting;
 using EpicLoot.BaseEL.Data;
-
+using EpicLoot.Skill;
 using EpicLoot_UnityLib;
+using Jotunn.Managers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace EpicLoot.BaseEL.CraftingV2
@@ -86,10 +88,15 @@ namespace EpicLoot.BaseEL.CraftingV2
             return EpicLootBase.EnchantingTableUpgradesActive.Value;
         }
 
+        public static EnchantingTableUI UiHandler;
+        
+
         private static void TabActivation(EnchantingTableUI ui)
         {
             if (ui == null || ui.TabHandler == null)
                 return;
+
+            UiHandler = ui;
             
             for (int i = 0; i < ui.TabHandler.transform.childCount; i++)
             {
@@ -105,6 +112,44 @@ namespace EpicLoot.BaseEL.CraftingV2
                     default:
                         tabGo.SetActive((EpicLootBase.EnchantingTableActivatedTabs.Value & (EnchantingTabs)tabBitwise) != 0);
                         break;
+                }
+            }
+        }
+
+        public static void RefreshEnchantRarityButtons()
+        {
+            if (UiHandler == null) return;
+            
+            var enchantPanel = (EnchantUI)UiHandler.Panels.First(x => x is EnchantUI);
+            var skillLevel = Enchanting.GetEnchantingSkillLevel();
+            for (var i1 = 0; i1 < enchantPanel.RarityButtons.Count; i1++)
+            {
+                var button = enchantPanel.RarityButtons[i1];
+                var targetLevel = Enchanting.Config.EnchantLevels[i1];
+                if (skillLevel < targetLevel)
+                {
+                    button.interactable = false;
+                    button.graphic.color = Color.gray;
+                    var tooltip = button.GetComponent<UITooltip>() ??
+                                  button.gameObject.AddComponent<UITooltip>();
+                    if (tooltip.m_tooltipPrefab == null)
+                    {
+                        tooltip.m_tooltipPrefab = PrefabManager.Instance.GetPrefab("InventoryTooltip");
+                    }
+
+                    tooltip.enabled = true;
+                    tooltip.m_text = Localization.instance.Localize("$mod_epicloot_skill_rarity_blocked_text").Replace("{0}", $"{targetLevel}");
+                    tooltip.m_topic = "$mod_epicloot_skill_rarity_blocked_topic";
+                }
+                else
+                {
+                    button.interactable = true;
+                    button.graphic.color = Color.white;
+                    var tooltip = button.GetComponent<UITooltip>();
+                    if (tooltip != null)
+                    {
+                        tooltip.enabled = false;
+                    }
                 }
             }
         }
@@ -390,7 +435,8 @@ namespace EpicLoot.BaseEL.CraftingV2
             foreach (var effectDef in availableEffects)
             {
                 var values = effectDef.GetValuesForRarity(rarity);
-                var valueDisplay = values != null ? Mathf.Approximately(values.MinValue, values.MaxValue) ? $"{values.MinValue}" : $"({values.MinValue}-{values.MaxValue})" : "";
+                var skillCappedValues = Enchanting.GetSkillCappedValueDef(values, rarity);
+                var valueDisplay = values != null ? Mathf.Approximately(values.MinValue, values.MaxValue) ? $"{values.MinValue}" : $"({skillCappedValues.MinValue}-{skillCappedValues.MaxValue})[{values.MinValue}-{values.MaxValue}]" : "";
                 sb.AppendLine($"‣ {string.Format(Localization.instance.Localize(effectDef.DisplayText), valueDisplay)}");
             }
 
@@ -413,6 +459,8 @@ namespace EpicLoot.BaseEL.CraftingV2
         private static GameObject EnchantItemAndReturnSuccessDialog(ItemDrop.ItemData item, MagicRarityUnity rarity)
         {
             var player = Player.m_localPlayer;
+            
+            Enchanting.SuccessfulOperation((int)rarity, Enchanting.OperationType.Enchant);
   
             float previousDurabilityPercent = 0;
             if (item.m_shared.m_useDurability)
@@ -531,7 +579,23 @@ namespace EpicLoot.BaseEL.CraftingV2
             foreach (var effectDef in availableEffects)
             {
                 var values = effectDef.GetValuesForRarity(item.GetRarity());
-                var valueDisplay = values != null ? Mathf.Approximately(values.MinValue, values.MaxValue) ? $"{values.MinValue}" : $"({values.MinValue}-{values.MaxValue})" : "";
+                
+
+                string valueDisplay = "";
+                if (values != null)
+                {
+                    var skillCappedValue = Enchanting.GetSkillCappedValueDef(values, rarity);
+                    var similar = Mathf.Approximately(values.MinValue, values.MaxValue);
+                    if (similar)
+                    {
+                        valueDisplay = $"{values.MinValue}";
+                    }
+                    else
+                    {
+                        valueDisplay = $"({skillCappedValue.MinValue}-{skillCappedValue.MaxValue})[{values.MinValue}-{values.MaxValue}]";
+                    }
+                }
+                
                 sb.AppendLine($"‣ {string.Format(Localization.instance.Localize(effectDef.DisplayText), valueDisplay)}");
             }
             sb.Append("</color>");
@@ -557,6 +621,8 @@ namespace EpicLoot.BaseEL.CraftingV2
             var magicItem = item?.GetMagicItem();
             if (magicItem == null)
                 return null;
+            
+            Enchanting.SuccessfulOperation((int)magicItem.Rarity, Enchanting.OperationType.Augment);
 
             magicItem.SetEffectAsAugmented(augmentindex);
             item.SaveMagicItem(magicItem);
@@ -715,6 +781,8 @@ namespace EpicLoot.BaseEL.CraftingV2
                 var bonusItemChance = 0;
                 if (!float.IsNaN(featureValues.Item1))
                     bonusItemChance = (int)featureValues.Item1;
+                
+                Enchanting.SuccessfulOperation((int)magicItem.Rarity, Enchanting.OperationType.Disenchant);
 
                 if (Random.Range(0, 99) < bonusItemChance)
                 {
@@ -723,6 +791,7 @@ namespace EpicLoot.BaseEL.CraftingV2
                     bonusItems = GetSacrificeProducts(new List<Tuple<ItemDrop.ItemData, int>>() { new(item, 1) });
                 }
 
+                
                 item.Data().Remove<MagicItemComponent>();
             }
 

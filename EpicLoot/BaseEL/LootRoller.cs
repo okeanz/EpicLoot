@@ -8,6 +8,7 @@ using EpicLoot.BaseEL.Data;
 using EpicLoot.BaseEL.GatedItemType;
 using EpicLoot.BaseEL.LegendarySystem;
 using EpicLoot.BaseEL.MagicItemEffects;
+using EpicLoot.Skill;
 using EpicLoot_UnityLib;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -618,6 +619,7 @@ namespace EpicLoot.BaseEL
             var valuesDef = valuesOverride ?? effectDef.GetValuesForRarity(itemRarity);
             if (valuesDef != null)
             {
+                valuesDef = Enchanting.GetSkillCappedValueDef(valuesDef, itemRarity);
                 value = valuesDef.MinValue;
                 if (valuesDef.Increment != 0)
                 {

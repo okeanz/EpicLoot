@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EpicLoot.BaseEL.LegendarySystem;
+using EpicLoot.Skill;
 using UnityEngine;
 
 namespace EpicLoot.BaseEL
@@ -136,7 +137,8 @@ namespace EpicLoot.BaseEL
             {
                 if (!Mathf.Approximately(values.MinValue, values.MaxValue))
                 {
-                    result += $" [{values.MinValue}-{values.MaxValue}]";
+                    var skillCappedValues = Enchanting.GetSkillCappedValueDef(values, rarity);
+                    result += $" ({skillCappedValues.MinValue}-{skillCappedValues.MaxValue})[{values.MinValue}-{values.MaxValue}]";
                 }
             }
             return result;

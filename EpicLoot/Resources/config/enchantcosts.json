@@ -214,5 +214,5 @@
     { "Item": "IronBountyToken", "Amount": 1 },
     { "Item": "IronBountyToken", "Amount": 5 },
     { "Item": "GoldBountyToken", "Amount": 5 }
-  ] 
+  ]
 }

@@ -280,6 +280,7 @@
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
     <Compile Include="EpicLoot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Skill\Enchanting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -295,6 +296,7 @@
     <Content Include="Resources\config\abilities.json" />
     <Content Include="Resources\config\adventuredata.json" />
     <Content Include="Resources\config\enchantcosts.json" />
+    <Content Include="Resources\config\enchantingskill.json" />
     <Content Include="Resources\config\enchantingupgrades.json" />
     <Content Include="Resources\config\iteminfo.json" />
     <Content Include="Resources\config\itemnames.json" />
