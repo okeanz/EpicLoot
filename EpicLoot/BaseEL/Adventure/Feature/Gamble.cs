@@ -125,7 +125,6 @@ namespace EpicLoot.BaseEL.Adventure.Feature
                 }
 
                 var itemId = GatedItemTypeHelper.GetItemFromCategory(itemConfig, gatingMode);
-                Debug.Log($"GetItemFromCategory result: {itemId}");
                 if (string.IsNullOrEmpty(itemId))
                 {
                     EpicLootBase.LogWarning(

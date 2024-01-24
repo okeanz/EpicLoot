@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\ILRepack.2.0.27\build\ILRepack.props" Condition="Exists('..\packages\ILRepack.2.0.27\build\ILRepack.props')" />
   <Import Project="..\packages\JotunnLib.2.15.0\build\JotunnLib.props" Condition="Exists('..\packages\JotunnLib.2.15.0\build\JotunnLib.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -8,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EpicLoot</RootNamespace>
-    <AssemblyName>EpicLoot</AssemblyName>
+    <AssemblyName>EpicLootGoblins</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -341,14 +342,26 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="JotunnPostBuildTaskWin" Condition="'$(OS)' == 'Windows_NT'">
-    <Exec Command="powershell.exe -ExecutionPolicy RemoteSigned -File &quot;$(SolutionDir)publish.ps1&quot; -Target &quot;$(ConfigurationName)&quot; -TargetPath &quot;$(TargetDir.TrimEnd('\'))&quot; -TargetAssembly &quot;$(TargetFileName)&quot; -ValheimPath &quot;$(VALHEIM_INSTALL.TrimEnd('\'))&quot; -DeployPath &quot;$(MOD_DEPLOYPATH.TrimEnd('\'))&quot; -ProjectPath &quot;$(ProjectDir.TrimEnd('\'))&quot; " />
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <InputAssemblies Include="$(OutputPath)\$(AssemblyName).dll" />
+      <InputAssemblies Include="$(OutputPath)\Newtonsoft.Json.dll" />
+      <InputAssemblies Include="$(OutputPath)\AdventureBackpacksAPI.dll" />
+      <InputAssemblies Include="$(OutputPath)\AnimationSpeedManager.dll" />
+      <InputAssemblies Include="$(OutputPath)\AugaAPI.dll" />
+      <InputAssemblies Include="$(OutputPath)\CreatureLevelControlAPI.dll" />
+      <InputAssemblies Include="$(OutputPath)\ServerSync.dll" />
+      <InputAssemblies Include="$(OutputPath)\System.Runtime.Serialization.dll" />
+    </ItemGroup>
+    <ILRepack Parallel="true" InputAssemblies="@(InputAssemblies)" KeyFile="$(AssemblyOriginatorKeyFile)" OutputFile="$(OutputPath)\$(AssemblyName)Merged.dll" LibraryPath="$(VALHEIM_INSTALL)\BepInEx\core;$(VALHEIM_INSTALL)\valheim_Data\Managed" TargetKind="Dll" />
   </Target>
+<!--  <Target Name="JotunnPostBuildTaskWin" Condition="'$(OS)' == 'Windows_NT'">
+    <Exec Command="powershell.exe -ExecutionPolicy RemoteSigned -File &quot;$(SolutionDir)publish.ps1&quot; -Target &quot;$(ConfigurationName)&quot; -TargetPath &quot;$(TargetDir.TrimEnd('\'))&quot; -TargetAssembly &quot;$(TargetFileName)&quot; -ValheimPath &quot;$(VALHEIM_INSTALL.TrimEnd('\'))&quot; -DeployPath &quot;$(MOD_DEPLOYPATH.TrimEnd('\'))&quot; -ProjectPath &quot;$(ProjectDir.TrimEnd('\'))&quot; " />
+  </Target>-->
   <PropertyGroup>
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
     <BuildDependsOn>
       $(BuildDependsOn);
-      JotunnPostBuildTaskWin
     </BuildDependsOn>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -356,5 +369,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105.The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\JotunnLib.2.15.0\build\JotunnLib.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\JotunnLib.2.15.0\build\JotunnLib.props'))" />
+    <Error Condition="!Exists('..\packages\ILRepack.2.0.27\build\ILRepack.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILRepack.2.0.27\build\ILRepack.props'))" />
+    <Error Condition="!Exists('..\packages\ILRepack.Lib.MSBuild.Task.2.0.26\build\ILRepack.Lib.MSBuild.Task.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILRepack.Lib.MSBuild.Task.2.0.26\build\ILRepack.Lib.MSBuild.Task.targets'))" />
   </Target>
+
+  <Import Project="..\packages\ILRepack.Lib.MSBuild.Task.2.0.26\build\ILRepack.Lib.MSBuild.Task.targets" Condition="Exists('..\packages\ILRepack.Lib.MSBuild.Task.2.0.26\build\ILRepack.Lib.MSBuild.Task.targets')" />
 </Project>

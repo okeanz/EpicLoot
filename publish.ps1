@@ -70,15 +70,9 @@ $Libs = "$ProjectPath\Resources\Libs"
 $Configs = "$ProjectPath\Resources\config"
 $DLL = "$TargetPath\$TargetAssembly"
 
-$LGH = "C:\GitHub\LootGoblinsHeim\package\EpicLoot"
-
-$DevPlugins = "C:\Users\User\AppData\Roaming\r2modmanPlus-local\Valheim\profiles\dev1\BepInEx\plugins"
+$DevPlugins = "C:\GitHub\EpicLoot\Publish"
 $DevPluginFoldername = "EpicLoot"
 $DevPluginsFolder = "$DevPlugins\$DevPluginFoldername"
-
-Copy-Item -Path "$Libs\*" -Destination "$LGH"
-Copy-Item -Path "$Configs\*" -Destination "$LGH"
-Copy-Item -Path "$DLL" -Destination "$LGH"
 
 if(!(Test-Path -Path $DevPluginsFolder)){
     New-Item -Path "$DevPlugins\" -Name "$DevPluginFoldername" -ItemType "directory"

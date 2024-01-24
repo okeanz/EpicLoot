@@ -77,16 +77,12 @@ namespace EpicLoot.BaseEL.GatedItemType
             {
                 returnItem = fallbackItem;
             }
-            
-            Debug.Log($"Fallback: {returnItem}");
 
             return returnItem;
         }
 
         public static string GetGatedItemID(string itemID, GatedItemTypeMode mode, List<string> usedTypes = null)
         {
-            Debug.Log($"GetGatedItemID: itemID:{itemID}; mode: {mode.ToString()}");
-            
             if (string.IsNullOrEmpty(itemID))
             {
                 EpicLootBase.LogError($"Tried to get gated itemID with null or empty itemID!");
@@ -118,8 +114,6 @@ namespace EpicLoot.BaseEL.GatedItemType
 
             while (CheckIfItemNeedsGate(mode, itemID, itemName))
             {
-                Debug.Log($"Gating: itemName: {itemName}");
-
                 var index = info.Items.IndexOf(itemID);
                 if (index < 0)
                 {
@@ -128,7 +122,6 @@ namespace EpicLoot.BaseEL.GatedItemType
                 }
                 if (index == 0)
                 {
-                    Debug.Log($"Gating: index == 0: {itemID}");
                     return string.IsNullOrEmpty(info.Fallback) ? itemID : GetGatedFallbackItem(info.Fallback, mode, itemID, usedTypes);
                 }
 
@@ -136,7 +129,6 @@ namespace EpicLoot.BaseEL.GatedItemType
                 itemName = GetItemName(itemID);
                 //EpicLoot.Log($"Next lower tier item is ({itemID} - {itemName})");
             }
-            Debug.Log($"Gating: result: {itemID}");
             return itemID;
         }
 

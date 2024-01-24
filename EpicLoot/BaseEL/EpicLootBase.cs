@@ -206,8 +206,6 @@ namespace EpicLoot.BaseEL
             
             _configSync.AddLockingConfigEntry(_serverConfigLocked);
 
-            var assembly = Assembly.GetExecutingAssembly();
-            
             EIDFLegacy.CheckForExtendedItemFrameworkLoaded(_instance);
 
             EnchantingTableUpgradesActive.SettingChanged += (_, _) => EnchantingTableUI.UpdateUpgradeActivation();
@@ -228,23 +226,6 @@ namespace EpicLoot.BaseEL
             _harmony = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), PluginId);
 
             LootTableLoaded?.Invoke();
-        }
-
-        private static void LoadEmbeddedAssembly(Assembly assembly, string assemblyName)
-        {
-            var stream = assembly.GetManifestResourceStream($"{assembly.GetName().Name}.{assemblyName}");
-            if (stream == null)
-            {
-                LogErrorForce($"Could not load embedded assembly ({assemblyName})!");
-                return;
-            }
-
-            using (stream)
-            {
-                var data = new byte[stream.Length];
-                stream.Read(data, 0, data.Length);
-                Assembly.Load(data);
-            }
         }
 
         public void Start()
