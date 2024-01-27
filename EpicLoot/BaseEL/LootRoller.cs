@@ -651,6 +651,15 @@ namespace EpicLoot.BaseEL
 
             return results;
         }
+        
+        private static ItemRarity GetMaxRarity()
+        {
+            if (!ZoneSystem.instance.CheckKey("defeated_eikthyr")) return ItemRarity.Magic;
+            if (!ZoneSystem.instance.CheckKey("defeated_bonemass")) return ItemRarity.Rare;
+            if (!ZoneSystem.instance.CheckKey("defeated_goblinking")) return ItemRarity.Epic;
+            if (!ZoneSystem.instance.CheckKey("defeated_queen")) return ItemRarity.Legendary;
+            return ItemRarity.Legendary;
+        }
 
         public static ItemRarity RollItemRarity(LootDrop lootDrop, float luckFactor)
         {
@@ -662,7 +671,11 @@ namespace EpicLoot.BaseEL
             var rarityWeights = GetRarityWeights(lootDrop.Rarity, luckFactor);
 
             _weightedRarityTable.Setup(rarityWeights, x => x.Value);
-            return _weightedRarityTable.Roll().Key;
+            var preResult = _weightedRarityTable.Roll().Key;
+
+            var maxRarity = GetMaxRarity();
+
+            return preResult >= maxRarity ? maxRarity : preResult;
         }
 
         public static Dictionary<ItemRarity, float> GetRarityWeights(float[] rarity, float luckFactor)
