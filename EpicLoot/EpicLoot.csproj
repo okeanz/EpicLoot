@@ -294,6 +294,7 @@
   <ItemGroup>
     <Content Include="BaseEL\Patching\testpatches.json" />
     <Content Include="Package\icon.png" />
+    <Content Include="Package\README.md" />
     <Content Include="Resources\config\abilities.json" />
     <Content Include="Resources\config\adventuredata.json" />
     <Content Include="Resources\config\enchantcosts.json" />
