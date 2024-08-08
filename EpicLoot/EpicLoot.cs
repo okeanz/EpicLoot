@@ -16,7 +16,7 @@ namespace EpicLoot
     {
         public const string PluginGUID = "com.lootgoblinsheim.epicloot";
         public const string PluginName = "LGH.EpicLoot";
-        public const string PluginVersion = "0.0.3";
+        public const string PluginVersion = "0.0.4";
         
         // Use this class to add your own localization to the game
         // https://valheim-modding.github.io/Jotunn/tutorials/localization.html

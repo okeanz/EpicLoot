@@ -107,6 +107,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -352,7 +355,9 @@
       <InputAssemblies Include="$(OutputPath)\AugaAPI.dll" />
       <InputAssemblies Include="$(OutputPath)\CreatureLevelControlAPI.dll" />
       <InputAssemblies Include="$(OutputPath)\ServerSync.dll" />
-      <InputAssemblies Include="$(OutputPath)\System.Runtime.Serialization.dll" />
+      <InputAssemblies Include="$(OutputPath)\System.Runtime.Serialization.dll">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </InputAssemblies>
     </ItemGroup>
     <ILRepack Parallel="true" InputAssemblies="@(InputAssemblies)" KeyFile="$(AssemblyOriginatorKeyFile)" OutputFile="$(OutputPath)\$(AssemblyName)Merged.dll" LibraryPath="$(VALHEIM_INSTALL)\BepInEx\core;$(VALHEIM_INSTALL)\valheim_Data\Managed" TargetKind="Dll" />
   </Target>

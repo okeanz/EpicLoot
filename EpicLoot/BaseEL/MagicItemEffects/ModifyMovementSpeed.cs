@@ -3,7 +3,7 @@
 namespace EpicLoot.BaseEL.MagicItemEffects
 {
     //public void UpdateMovementModifier()
-    [HarmonyPatch(typeof(Player), nameof(Player.UpdateMovementModifier))]
+    [HarmonyPatch(typeof(Player), nameof(Player.UpdateModifiers))]
     public static class RemoveSpeedPenalty_Player_UpdateMovementModifier_Patch
     {
         public static void Postfix(Player __instance)
@@ -15,7 +15,7 @@ namespace EpicLoot.BaseEL.MagicItemEffects
 
             ModifyWithLowHealth.Apply(__instance, MagicEffectType.ModifyMovementSpeed, effect =>
             {
-                __instance.m_equipmentMovementModifier += __instance.GetTotalActiveMagicEffectValue(MagicEffectType.ModifyMovementSpeed, 0.01f);
+                __instance.m_equipmentModifierValues[0] += __instance.GetTotalActiveMagicEffectValue(MagicEffectType.ModifyMovementSpeed, 0.01f);
             });
         }
 
@@ -23,7 +23,7 @@ namespace EpicLoot.BaseEL.MagicItemEffects
         {
             if (item != null && item.HasMagicEffect(MagicEffectType.RemoveSpeedPenalty))
             {
-                __instance.m_equipmentMovementModifier -= item.m_shared.m_movementModifier;
+                __instance.m_equipmentModifierValues[0] -= item.m_shared.m_movementModifier;
             }
         }
     }

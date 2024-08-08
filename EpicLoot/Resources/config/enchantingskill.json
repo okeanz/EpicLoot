@@ -1,5 +1,5 @@
 {
-  "EnchantLevels": [0, 25, 50, 80],
+  "EnchantLevels": [0, 25, 50, 80, 100],
   "successEnchantSkillMultiplier": 1.5,
   "successDisenchantSkillMultiplier": 1.0,
   "successAugmentationSkillMultiplier": 1.2,
