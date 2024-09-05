@@ -266,9 +266,7 @@ namespace EpicLoot.BaseEL
                     (Object.Instantiate((Object) itemPrefab,
                         Player.m_localPlayer.transform.position + Player.m_localPlayer.transform.forward * 2f +
                         Vector3.up, Quaternion.identity) as GameObject)?.GetComponent<ItemDrop>();
-                // TODO: Mythic Hookup
-                if (itemDrop.m_itemData.IsMagicCraftingMaterial() || itemDrop.m_itemData.IsRunestone() &&
-                    itemDrop.m_itemData.GetCraftingMaterialRarity() != ItemRarity.Mythic)
+                if (itemDrop.m_itemData.IsMagicCraftingMaterial() || itemDrop.m_itemData.IsRunestone())
                 {
                     itemDrop.m_itemData.m_stack = itemDrop.m_itemData.m_shared.m_maxStackSize / 2;
                 }

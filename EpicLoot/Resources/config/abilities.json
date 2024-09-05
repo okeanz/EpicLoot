@@ -4,7 +4,7 @@
       "ID" : "Bulwark",
       "IconAsset": "BulwarkIcon",
       "ActivationMode": "Activated",
-      "Cooldown" : 180,
+      "Cooldown" : 60,
       "Action": "StatusEffect",
       "ActionParams": [ "BulwarkStatusEffect" ]
     },
@@ -18,7 +18,7 @@
       "ID" : "Berserker",
       "IconAsset": "BerserkerIcon",
       "ActivationMode": "Activated",
-      "Cooldown" : 300,
+      "Cooldown" : 180,
       "Action": "StatusEffect",
       "ActionParams": [ "BerserkerStatusEffect" ]
     }

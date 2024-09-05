@@ -3,6 +3,7 @@ using System.Linq;
 using BepInEx;
 using EpicLoot.BaseEL.Adventure.Feature;
 using EpicLoot.BaseEL.Common;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace EpicLoot.BaseEL.GatedItemType
@@ -35,7 +36,7 @@ namespace EpicLoot.BaseEL.GatedItemType
                
                 foreach (var itemID in info.Items)
                 {
-                    ItemInfoByID.Add(itemID, info);
+                    ItemInfoByID[itemID] = info;
                 }
 
                 foreach (var entry in info.ItemsByBoss)
@@ -47,7 +48,7 @@ namespace EpicLoot.BaseEL.GatedItemType
 
                     foreach (var itemID in entry.Value)
                     {
-                        BossPerItem.Add(itemID, entry.Key);
+                        BossPerItem[itemID] = entry.Key;
                     }
                 }
             }
@@ -184,6 +185,32 @@ namespace EpicLoot.BaseEL.GatedItemType
             }
 
             return GetGatedItemID(itemInfo.Items[itemInfo.Items.Count - 1], mode, usedTypes);
+        }
+
+        public static List<string> GetGuaranteedEffectsNamesForItem(ItemDrop.ItemData item, ItemRarity rarity)
+        {
+            if (!ItemInfoByID.TryGetValue(item.m_dropPrefab.name, out var info)) return new List<string>();
+
+            var guaranteed = info.Guaranteed;
+            
+            EpicLootBase.Log($"guaranteed: {JsonConvert.SerializeObject(guaranteed)}");
+            
+            var result = new List<string>();
+            for (var i = 0; i <= (int) rarity; i++)
+            {
+                if (i < guaranteed.Count)
+                {
+                    result.AddRange(guaranteed[i]);
+                }
+            }
+
+            return result;
+        }
+
+        public static List<MagicItemEffectDefinition> GetGuaranteedEffectsForItem(ItemDrop.ItemData item, ItemRarity rarity)
+        {
+            var effectTypeNames = GetGuaranteedEffectsNamesForItem(item, rarity);
+            return MagicItemEffectDefinitions.ConvertToEffectDefinitions(effectTypeNames);
         }
     }
 }

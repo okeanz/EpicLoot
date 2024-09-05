@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using EpicLoot.BaseEL.Crafting;
 using EpicLoot.BaseEL.Data;
+using EpicLoot.BaseEL.GatedItemType;
 using EpicLoot.Skill;
 using EpicLoot_UnityLib;
 using Jotunn.Managers;
@@ -449,6 +450,15 @@ namespace EpicLoot.BaseEL.CraftingV2
 
             var tempMagicItem = new MagicItem() {Rarity = rarity};
             var availableEffects = MagicItemEffectDefinitions.GetAvailableEffects(item, tempMagicItem);
+            var guaranteedEffectsNames = GatedItemTypeHelper.GetGuaranteedEffectsNamesForItem(item, rarity);
+            EpicLootBase.Log(
+                $"guaranteed for {item.m_dropPrefab.name}: {string.Join(",", guaranteedEffectsNames.ToArray())}");
+            
+            var guaranteedEffects = GatedItemTypeHelper.GetGuaranteedEffectsForItem(item, rarity);
+            availableEffects.AddRange(guaranteedEffects.Except(availableEffects));
+
+            if (guaranteedEffectsNames.Count > 0)
+                availableEffects = availableEffects.OrderByDescending(x => guaranteedEffectsNames.Contains(x.Type)).ToList();
 
             foreach (var effectDef in availableEffects)
             {
@@ -458,8 +468,10 @@ namespace EpicLoot.BaseEL.CraftingV2
                     ? Mathf.Approximately(values.MinValue, values.MaxValue) ? $"{values.MinValue}" :
                     $"({skillCappedValues.MinValue}-{skillCappedValues.MaxValue})[{values.MinValue}-{values.MaxValue}]"
                     : "";
+                var guarantyString =
+                    guaranteedEffectsNames.Contains(effectDef.Type) ? "<color=#34d902><Гарант></color>" : "";
                 sb.AppendLine(
-                    $"‣ {string.Format(Localization.instance.Localize(effectDef.DisplayText), valueDisplay)}");
+                    $"‣ {guarantyString}{string.Format(Localization.instance.Localize(effectDef.DisplayText), valueDisplay)}");
             }
 
             sb.Append("</color>");
@@ -762,10 +774,9 @@ namespace EpicLoot.BaseEL.CraftingV2
                 case ItemRarity.Legendary:
                     costList = EnchantCostsHelper.Config.DisenchantCosts.Legendary;
                     break;
-
-                // TODO: Mythic Hookup
                 case ItemRarity.Mythic:
-                    return result;
+                    costList = EnchantCostsHelper.Config.DisenchantCosts.Mythic;
+                    break;
 
                 default:
                     throw new ArgumentOutOfRangeException();

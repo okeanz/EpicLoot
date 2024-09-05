@@ -145,8 +145,7 @@ namespace EpicLoot.BaseEL.Adventure
                 EpicLootBase.GetRarityDisplayName(ItemRarity.Rare),
                 EpicLootBase.GetRarityDisplayName(ItemRarity.Epic),
                 EpicLootBase.GetRarityDisplayName(ItemRarity.Legendary),
-                // TODO: Mythic Hookup
-                ""//EpicLoot.GetRarityDisplayName(ItemRarity.Mythic),
+                EpicLootBase.GetRarityDisplayName(ItemRarity.Mythic),
             };
 
             var totalWeight = AdventureDataManager.Config.Gamble.GambleRarityChance.Sum();

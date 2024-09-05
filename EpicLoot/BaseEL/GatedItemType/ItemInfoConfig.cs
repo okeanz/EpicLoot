@@ -9,6 +9,7 @@ namespace EpicLoot.BaseEL.GatedItemType
         public string Type;
         public string Fallback;
         public List<string> Items = new List<string>();
+        public List<List<string>> Guaranteed = new();
         public Dictionary<string, List<string>> ItemsByBoss = new Dictionary<string, List<string>>();
     }
 

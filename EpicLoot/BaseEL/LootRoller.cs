@@ -10,6 +10,7 @@ using EpicLoot.BaseEL.LegendarySystem;
 using EpicLoot.BaseEL.MagicItemEffects;
 using EpicLoot.Skill;
 using EpicLoot_UnityLib;
+using HarmonyLib;
 using JetBrains.Annotations;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -78,7 +79,8 @@ namespace EpicLoot.BaseEL
                 }
                 else
                 {
-                    EpicLootBase.LogError($"Tried to add ItemSet {itemSet.Name}, but it already exists!");
+                    ItemSets[itemSet.Name].Loot.AddRangeToArray(itemSet.Loot);
+                    EpicLootBase.LogWarning($"Tried to add ItemSet {itemSet.Name}, but it already exists!");
                 }
             }
         }
@@ -519,6 +521,17 @@ namespace EpicLoot.BaseEL
                     }
                 }
             }
+            
+            var guaranteedEffects = GatedItemTypeHelper.GetGuaranteedEffectsForItem(baseItem, rarity);
+            
+            foreach (var guaranteedEffect in guaranteedEffects)
+            {
+                var effect = RollEffect(guaranteedEffect, magicItem.Rarity);
+                EpicLootBase.Log($"Add guaranteed effect: {guaranteedEffect.Type}");
+                magicItem.Effects.Add(effect);
+            }
+
+            effectCount -= guaranteedEffects.Count;
 
             for (var i = 0; i < effectCount; i++)
             {
@@ -580,9 +593,9 @@ namespace EpicLoot.BaseEL
                     break;
 
                 case ItemRarity.Mythic:
-                    // TODO: Mythic Hookup
-                    return new List<KeyValuePair<int, float>>();//Config.MagicEffectsCount.Mythic.Select(x => new KeyValuePair<int, float>((int)x[0], x[1])).ToList();
-
+                    result = Config.MagicEffectsCount.Mythic.Select(x => new KeyValuePair<int, float>((int)x[0], x[1])).ToList();
+                    break;
+                
                 default:
                     throw new ArgumentOutOfRangeException(nameof(rarity), rarity, null);
             }

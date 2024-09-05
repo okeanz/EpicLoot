@@ -56,7 +56,7 @@ namespace EpicLoot.BaseEL.MagicItemEffects
 				slow = character.gameObject.AddComponent<Slow>();
 				slow.Multiplier = multiplier;
 			}
-
+			
 			slow.TimeToLive = 2;
 		}
 	}

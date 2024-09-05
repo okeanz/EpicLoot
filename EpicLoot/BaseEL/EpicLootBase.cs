@@ -47,14 +47,12 @@ namespace EpicLoot.BaseEL
         private static ConfigEntry<string> _rareRarityColor;
         private static ConfigEntry<string> _epicRarityColor;
         private static ConfigEntry<string> _legendaryRarityColor;
-        // TODO: Mythic Hookup
-        //private static ConfigEntry<string> _mythicRarityColor;
+        private static ConfigEntry<string> _mythicRarityColor;
         private static ConfigEntry<int> _magicMaterialIconColor;
         private static ConfigEntry<int> _rareMaterialIconColor;
         private static ConfigEntry<int> _epicMaterialIconColor;
         private static ConfigEntry<int> _legendaryMaterialIconColor;
-        // TODO: Mythic Hookup
-        //private static ConfigEntry<int> _mythicMaterialIconColor;
+        private static ConfigEntry<int> _mythicMaterialIconColor;
         public static ConfigEntry<bool> UseScrollingCraftDescription;
         public static ConfigEntry<bool> TransferMagicItemToCrafts;
         public static ConfigEntry<CraftingTabStyle> CraftingTabStyle;
@@ -159,9 +157,8 @@ namespace EpicLoot.BaseEL
             _epicMaterialIconColor = Config.Bind("Item Colors", "Epic Crafting Material Icon Index", 7, "Indicates the color of the icon used for epic crafting materials. A number between 0 and 9. Available options: 0=Red, 1=Orange, 2=Yellow, 3=Green, 4=Teal, 5=Blue, 6=Indigo, 7=Purple, 8=Pink, 9=Gray");
             _legendaryRarityColor = Config.Bind("Item Colors", "Legendary Rarity Color", "Teal", "The color of Legendary rarity items, the highest magic item tier. (Optional, use an HTML hex color starting with # to have a custom color.) Available options: Red, Orange, Yellow, Green, Teal, Blue, Indigo, Purple, Pink, Gray");
             _legendaryMaterialIconColor = Config.Bind("Item Colors", "Legendary Crafting Material Icon Index", 4, "Indicates the color of the icon used for legendary crafting materials. A number between 0 and 9. Available options: 0=Red, 1=Orange, 2=Yellow, 3=Green, 4=Teal, 5=Blue, 6=Indigo, 7=Purple, 8=Pink, 9=Gray");
-            // TODO: Mythic hookup
-            //_mythicRarityColor = Config.Bind("Item Colors", "Mythic Rarity Color", "Orange", "The color of Legendary rarity items, the highest magic item tier. (Optional, use an HTML hex color starting with # to have a custom color.) Available options: Red, Orange, Yellow, Green, Teal, Blue, Indigo, Purple, Pink, Gray");
-            //_mythicMaterialIconColor = Config.Bind("Item Colors", "Mythic Crafting Material Icon Index", 1, "Indicates the color of the icon used for legendary crafting materials. A number between 0 and 9. Available options: 0=Red, 1=Orange, 2=Yellow, 3=Green, 4=Teal, 5=Blue, 6=Indigo, 7=Purple, 8=Pink, 9=Gray");
+            _mythicRarityColor = Config.Bind("Item Colors", "Mythic Rarity Color", "Orange", "The color of Legendary rarity items, the highest magic item tier. (Optional, use an HTML hex color starting with # to have a custom color.) Available options: Red, Orange, Yellow, Green, Teal, Blue, Indigo, Purple, Pink, Gray");
+            _mythicMaterialIconColor = Config.Bind("Item Colors", "Mythic Crafting Material Icon Index", 1, "Indicates the color of the icon used for legendary crafting materials. A number between 0 and 9. Available options: 0=Red, 1=Orange, 2=Yellow, 3=Green, 4=Teal, 5=Blue, 6=Indigo, 7=Purple, 8=Pink, 9=Gray");
             _setItemColor = Config.Bind("Item Colors", "Set Item Color", "#26ffff", "The color of set item text and the set item icon. Use a hex color, default is cyan");
             UseScrollingCraftDescription = Config.Bind("Crafting UI", "Use Scrolling Craft Description", true, "Changes the item description in the crafting panel to scroll instead of scale when it gets too long for the space.");
             CraftingTabStyle = Config.Bind("Crafting UI", "Crafting Tab Style", Crafting.CraftingTabStyle.HorizontalSquish, "Sets the layout style for crafting tabs, if you've got too many. Horizontal is the vanilla method, but might overlap other mods or run off the screen. HorizontalSquish makes the buttons narrower, works okay with 6 or 7 buttons. Vertical puts the tabs in a column to the left the crafting window. Angled tries to make more room at the top of the crafting panel by angling the tabs, works okay with 6 or 7 tabs.");
@@ -1518,8 +1515,7 @@ namespace EpicLoot.BaseEL
                 case ItemRarity.Legendary:
                     return GetColor(_legendaryRarityColor.Value);
                 case ItemRarity.Mythic:
-                    // TODO: Mythic Hookup
-                    return GetColor("Orange"/*_mythicRarityColor.Value*/);
+                    return GetColor(_mythicRarityColor.Value);
                 default:
                     return "#FFFFFF";
             }
@@ -1560,8 +1556,7 @@ namespace EpicLoot.BaseEL
                 case ItemRarity.Legendary:
                     return Mathf.Clamp(_legendaryMaterialIconColor.Value, 0, 9);
                 case ItemRarity.Mythic:
-                    // TODO: Mythic Hookup
-                    return 1; //Mathf.Clamp(_mythicMaterialIconColor.Value, 0, 9);
+                    return Mathf.Clamp(_mythicMaterialIconColor.Value, 0, 9);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(rarity), rarity, null);
             }

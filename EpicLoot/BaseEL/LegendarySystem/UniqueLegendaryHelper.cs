@@ -32,7 +32,7 @@ namespace EpicLoot.BaseEL.LegendarySystem
         {
             foreach (var legendaryInfo in legendaryItems)
             {
-                LegendaryInfo.Add(legendaryInfo.ID, legendaryInfo);
+                LegendaryInfo[legendaryInfo.ID] = legendaryInfo;
             }
         }
 
@@ -40,10 +40,10 @@ namespace EpicLoot.BaseEL.LegendarySystem
         {
             foreach (var legendarySetInfo in legendarySets)
             {
-                LegendarySets.Add(legendarySetInfo.ID, legendarySetInfo);
+                LegendarySets[legendarySetInfo.ID] = legendarySetInfo;
                 foreach (var legendaryID in legendarySetInfo.LegendaryIDs)
                 {
-                    _itemsToSetMap.Add(legendaryID, legendarySetInfo);
+                    _itemsToSetMap[legendaryID] = legendarySetInfo;
                 }
             }
         }

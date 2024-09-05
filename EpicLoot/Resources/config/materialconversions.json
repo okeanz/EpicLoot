@@ -5,9 +5,8 @@
       "Product": "ShardRare",
       "Amount": 1,
       "Type": "Upgrade", 
-      "resources": [
-        { "item": "ShardMagic", "amount": 2  },
-		{ "item": "EssenceRare", "amount": 1  }
+      "Resources": [
+        { "Item": "ShardMagic", "Amount": 5 }
       ]
     },
     {
@@ -15,9 +14,9 @@
       "Product": "ShardEpic",
       "Amount": 1,
       "Type": "Upgrade", 
-      "resources": [
-		{ "item": "ShardMagic", "amount": 3  },
-        { "item": "EssenceEpic",    "amount": 1 }
+      "Resources": [
+        { "Item": "ShardRare", "Amount": 5 },
+        { "Item": "Coins",     "Amount": 5 }
       ]
     },
     {
@@ -25,20 +24,28 @@
       "Product": "ShardLegendary",
       "Amount": 1,
       "Type": "Upgrade", 
-      "resources": [
-		{ "item": "ShardMagic", "amount": 5  },
-        { "item": "EssenceLegendary",    "amount": 1 }
+      "Resources": [
+        { "Item": "ShardEpic", "Amount": 5 },
+        { "Item": "Coins",     "Amount": 10 }
       ]
     },
-	//Dust//
+    {
+      "Name": "Recipe_ShardMythicUpgrade",
+      "Product": "ShardMythic",
+      "Amount": 1,
+      "Type": "Upgrade", 
+      "Resources": [
+        { "Item": "ShardLegendary", "Amount": 5 },
+        { "Item": "Coins",          "Amount": 15 }
+      ]
+    },
     {
       "Name": "Recipe_DustRareUpgrade",
       "Product": "DustRare",
       "Amount": 1,
       "Type": "Upgrade", 
-      "resources": [
-        { "item": "DustMagic", "amount": 5  },
-		{ "item": "EssenceRare", "amount": 1  }
+      "Resources": [
+        { "Item": "DustMagic", "Amount": 5  }
       ]
     },
     {
@@ -46,9 +53,9 @@
       "Product": "DustEpic",
       "Amount": 1,
       "Type": "Upgrade", 
-      "resources": [
-		{ "item": "DustMagic", "amount": 10  },
-        { "item": "EssenceEpic",    "amount": 1 }
+      "Resources": [
+        { "Item": "DustRare", "Amount": 5  },
+        { "Item": "Coins",    "Amount": 5 }
       ]
     },
     {
@@ -56,51 +63,106 @@
       "Product": "DustLegendary",
       "Amount": 1,
       "Type": "Upgrade", 
-      "resources": [
-		{ "item": "DustMagic", "amount": 15  },
-        { "item": "EssenceLegendary",    "amount": 1 }
+      "Resources": [
+        { "Item": "DustEpic", "Amount": 5  },
+        { "Item": "Coins",    "Amount": 10 }
       ]
     },
-	//Reagent//
+    {
+      "Name": "Recipe_DustMythicUpgrade",
+      "Product": "DustMythic",
+      "Amount": 1,
+      "Type": "Upgrade", 
+      "Resources": [
+        { "Item": "DustLegendary",  "Amount": 5  },
+        { "Item": "Coins",          "Amount": 15 }
+      ]
+    },
     {
       "Name": "Recipe_ReagentRareUpgrade",
       "Product": "ReagentRare",
-      "Amount": 5,
+      "Amount": 1,
       "Type": "Upgrade", 
-      "resources": [
-        { "item": "ReagentMagic", "amount": 5 },
-        { "item": "EssenceRare", "amount": 1 }
+      "Resources": [
+        { "Item": "ReagentMagic", "Amount": 5 }
       ]
     },
     {
       "Name": "Recipe_ReagentEpicUpgrade",
       "Product": "ReagentEpic",
-      "Amount": 4,
+      "Amount": 1,
       "Type": "Upgrade", 
-      "resources": [
-        { "item": "ReagentMagic", "amount": 4 },
-        { "item": "EssenceEpic", "amount": 1 }
+      "Resources": [
+        { "Item": "ReagentRare", "Amount": 5  },
+        { "Item": "Coins",       "Amount": 5 }
       ]
     },
     {
       "Name": "Recipe_ReagentLegendaryUpgrade",
       "Product": "ReagentLegendary",
-      "Amount": 3,
+      "Amount": 1,
       "Type": "Upgrade", 
-      "resources": [
-        { "item": "ReagentMagic", "amount": 3 },
-        { "item": "EssenceLegendary", "amount": 1 }
+      "Resources": [
+        { "Item": "ReagentEpic", "Amount": 5  },
+        { "Item": "Coins",       "Amount": 10 }
       ]
     },
-	//Runestone//
-	{
+    {
+      "Name": "Recipe_ReagentMythicUpgrade",
+      "Product": "ReagentMythic",
+      "Amount": 1,
+      "Type": "Upgrade", 
+      "Resources": [
+        { "Item": "ReagentLegendary", "Amount": 5  },
+        { "Item": "Coins",            "Amount": 15 }
+      ]
+    },
+    {
+      "Name": "Recipe_EssenceRareUpgrade",
+      "Product": "EssenceRare",
+      "Amount": 1,
+      "Type": "Upgrade", 
+      "Resources": [
+        { "Item": "EssenceMagic", "Amount": 5 }
+      ]
+    },
+    {
+      "Name": "Recipe_EssenceEpicUpgrade",
+      "Product": "EssenceEpic",
+      "Amount": 1,
+      "Type": "Upgrade", 
+      "Resources": [
+        { "Item": "EssenceRare", "Amount": 5  },
+        { "Item": "Coins",       "Amount": 5 }
+      ]
+    },
+    {
+      "Name": "Recipe_EssenceLegendaryUpgrade",
+      "Product": "EssenceLegendary",
+      "Amount": 1,
+      "Type": "Upgrade", 
+      "Resources": [
+        { "Item": "EssenceEpic", "Amount": 5  },
+        { "Item": "Coins",       "Amount": 10 }
+      ]
+    },
+    {
+      "Name": "Recipe_EssenceMythicUpgrade",
+      "Product": "EssenceMythic",
+      "Amount": 1,
+      "Type": "Upgrade", 
+      "Resources": [
+        { "Item": "EssenceLegendary", "Amount": 5  },
+        { "Item": "Coins",            "Amount": 15 }
+      ]
+    },
+    {
       "Name": "Recipe_RunestoneRareUpgrade",
       "Product": "RunestoneRare",
       "Amount": 1,
       "Type": "Upgrade", 
-      "resources": [
-        { "item": "RunestoneMagic", 		"amount": 2 },
-        { "item": "EssenceRare", 			"amount": 1 }
+      "Resources": [
+        { "Item": "RunestoneMagic", "Amount": 5 }
       ]
     },
     {
@@ -109,8 +171,8 @@
       "Amount": 1,
       "Type": "Upgrade", 
       "Resources": [
-        { "Item": "RunestoneMagic", 		"Amount": 3 },
-        { "Item": "EssenceEpic",         	"Amount": 1 }
+        { "Item": "RunestoneRare", "Amount": 5  },
+        { "Item": "Coins",         "Amount": 5 }
       ]
     },
     {
@@ -119,258 +181,254 @@
       "Amount": 1,
       "Type": "Upgrade", 
       "Resources": [
-        { "Item": "RunestoneMagic",			 "Amount": 5 },
-        { "Item": "EssenceLegendary",        "Amount": 1 }
+        { "Item": "RunestoneEpic", "Amount": 5  },
+        { "Item": "Coins",         "Amount": 10 }
       ]
     },
-	//Convert//
+    {
+      "Name": "Recipe_RunestoneMythicUpgrade",
+      "Product": "RunestoneMythic",
+      "Amount": 1,
+      "Type": "Upgrade", 
+      "Resources": [
+        { "Item": "RunestoneLegendary", "Amount": 5  },
+        { "Item": "Coins",              "Amount": 15 }
+      ]
+    },
     {
       "Name": "Recipe_MagicShardToDust_Conversion",
       "Product": "DustMagic",
-      "Amount": 2,
+      "Amount": 1,
       "Type": "Convert", 
       "Resources": [
-        { "Item": "ShardMagic", "Amount": 1 }
+        { "Item": "ShardMagic", "Amount": 2 }
+      ]
+    },
+    {
+      "Name": "Recipe_MagicShardToEssence_Conversion",
+      "Product": "EssenceMagic",
+      "Amount": 1,
+      "Type": "Convert", 
+      "Resources": [
+        { "Item": "ShardMagic", "Amount": 2 }
+      ]
+    },
+    {
+      "Name": "Recipe_MagicShardToReagent_Conversion",
+      "Product": "ReagentMagic",
+      "Amount": 1,
+      "Type": "Convert", 
+      "Resources": [
+        { "Item": "ShardMagic", "Amount": 2 }
       ]
     },
     {
       "Name": "Recipe_RareShardToDust_Conversion",
       "Product": "DustRare",
-      "Amount": 2,
+      "Amount": 1,
       "Type": "Convert", 
       "Resources": [
-        { "Item": "ShardRare", "Amount": 1 }
+        { "Item": "ShardRare", "Amount": 2 },
+        { "Item": "Coins",     "Amount": 2 }
+      ]
+    },
+    {
+      "Name": "Recipe_RareShardToEssence_Conversion",
+      "Product": "EssenceRare",
+      "Amount": 1,
+      "Type": "Convert", 
+      "Resources": [
+        { "Item": "ShardRare", "Amount": 2 },
+        { "Item": "Coins",     "Amount": 2 }
+      ]
+    },
+    {
+      "Name": "Recipe_RareShardToReagent_Conversion",
+      "Product": "ReagentRare",
+      "Amount": 1,
+      "Type": "Convert", 
+      "Resources": [
+        { "Item": "ShardRare", "Amount": 2 },
+        { "Item": "Coins",     "Amount": 2 }
       ]
     },
     {
       "Name": "Recipe_EpicShardToDust_Conversion",
       "Product": "DustEpic",
-      "Amount": 2,
+      "Amount": 1,
       "Type": "Convert", 
       "Resources": [
-        { "Item": "ShardEpic", "Amount": 1 }
+        { "Item": "ShardEpic", "Amount": 2 },
+        { "Item": "Coins",     "Amount": 3 }
+      ]
+    },
+    {
+      "Name": "Recipe_EpicShardToEssence_Conversion",
+      "Product": "EssenceEpic",
+      "Amount": 1,
+      "Type": "Convert", 
+      "Resources": [
+        { "Item": "ShardEpic", "Amount": 2 },
+        { "Item": "Coins",     "Amount": 3 }
+      ]
+    },
+    {
+      "Name": "Recipe_EpicShardToReagent_Conversion",
+      "Product": "ReagentEpic",
+      "Amount": 1,
+      "Type": "Convert", 
+      "Resources": [
+        { "Item": "ShardEpic", "Amount": 2 },
+        { "Item": "Coins",     "Amount": 3 }
       ]
     },
     {
       "Name": "Recipe_LegendaryShardToDust_Conversion",
       "Product": "DustLegendary",
-      "Amount": 2,
-      "Type": "Convert", 
-      "Resources": [
-        { "Item": "ShardLegendary", "Amount": 1 }
-      ]
-    },
-	//Convert_ReduceRunestones//
-    {
-      "Name": "Recipe_LegendaryRunestoneToRunestone_Conversion",
-      "Product": "RunestoneEpic",
-      "Amount": 2,
-      "Type": "Convert", 
-      "Resources": [
-        { "Item": "RunestoneLegendary", "Amount": 1 },
-        { "Item": "DustMagic",         "Amount": 15 }
-      ]
-    },
-    {
-      "Name": "Recipe_EpicRunestoneToRunestone_Conversion",
-      "Product": "RunestoneRare",
       "Amount": 1,
       "Type": "Convert", 
       "Resources": [
-        { "Item": "RunestoneEpic", "Amount": 1 },
-        { "Item": "DustMagic",         "Amount": 10 }
+        { "Item": "ShardLegendary", "Amount": 2 },
+        { "Item": "Coins",          "Amount": 4 }
       ]
     },
     {
-      "Name": "Recipe_RareRunestoneToRunestone_Conversion",
-      "Product": "RunestoneMagic",
+      "Name": "Recipe_LegendaryShardToEssence_Conversion",
+      "Product": "EssenceLegendary",
       "Amount": 1,
       "Type": "Convert", 
       "Resources": [
-        { "Item": "RunestoneRare", "Amount": 1 },
-        { "Item": "DustMagic",         "Amount": 5 }
-      ]
-    },
-	//Junk//
-	{
-      "Name": "Recipe_Amber",
-      "Product": "Coins",
-      "Amount": 5, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "Amber", "amount": 1 },
-      ]
-    },
-	{
-      "Name": "Recipe_AmberPearl",
-      "Product": "Coins",
-      "Amount": 10, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "AmberPearl", "amount": 1 },
-      ]
-    },
-	{
-      "Name": "Recipe_Ruby",
-      "Product": "Coins",
-      "Amount": 20, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "Ruby", "amount": 1 },
-      ]
-    },
-	{
-      "Name": "Recipe_SilverNecklace",
-      "Product": "Coins",
-      "Amount": 30, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "SilverNecklace", "amount": 1 },
-      ]
-    },
-	{
-      "Name": "Recipe_Onyx_TW",
-      "Product": "Coins",
-      "Amount": 30, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "Onyx_TW", "amount": 1 },
-      ]
-    },
-	{
-      "Name": "Recipe_Diamond_TW",
-      "Product": "Coins",
-      "Amount": 45, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "Diamond_TW", "amount": 1 },
-      ]
-    },
-	{
-      "Name": "Recipe_AncientArtifact_TW",
-      "Product": "Coins",
-      "Amount": 50, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "AncientArtifact_TW", "amount": 1 },
-      ]
-    },
-	{
-      "Name": "Recipe_Emerald_TW",
-      "Product": "Coins",
-      "Amount": 60, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "Emerald_TW", "amount": 1 },
-      ]
-    },
-	{
-      "Name": "Recipe_Amethyst_TW",
-      "Product": "Coins",
-      "Amount": 80, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "Amethyst_TW", "amount": 1 },
-      ]
-    },
-	{
-      "Name": "Recipe_Topaz_TW",
-      "Product": "Coins",
-      "Amount": 100, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "Topaz_TW", "amount": 1 },
-      ]
-    },
-	{
-      "Name": "Recipe_Sapphire_TW",
-      "Product": "Coins",
-      "Amount": 100, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "Sapphire_TW", "amount": 1 },
-      ]
-    },
-	{
-      "Name": "Recipe_ForestToken",
-      "Product": "ForestToken",
-      "Amount": 1, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "DustMagic", "amount": 20 },
-		{ "item": "Bronze", "amount": 3 },
-		{ "item": "Chitin", "amount": 5 }
-      ]
-    },
-	{
-      "Name": "Recipe_IronBountyToken",
-      "Product": "IronBountyToken",
-      "Amount": 1, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "DustMagic", "amount": 40 },
-		{ "item": "Iron", "amount": 3 },
-		{ "item": "Chitin", "amount": 5 }
+        { "Item": "ShardLegendary", "Amount": 2 },
+        { "Item": "Coins",          "Amount": 4 }
       ]
     },
     {
-      "Name": "Recipe_DeerTrophy",
-      "Product": "TrophyDeer",
-      "Amount": 1, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "DeerHide", "amount": 20 },
-		{ "item": "DustMagic", "amount": 5 }
+      "Name": "Recipe_LegendaryShardToReagent_Conversion",
+      "Product": "ReagentLegendary",
+      "Amount": 1,
+      "Type": "Convert", 
+      "Resources": [
+        { "Item": "ShardLegendary", "Amount": 2 },
+        { "Item": "Coins",          "Amount": 4 }
+      ]
+    },{
+      "Name": "Recipe_MythicShardToDust_Conversion",
+      "Product": "DustMythic",
+      "Amount": 1,
+      "Type": "Convert", 
+      "Resources": [
+        { "Item": "ShardMythic", "Amount": 2 },
+        { "Item": "Coins",          "Amount": 4 }
       ]
     },
     {
-      "Name": "Recipe_GreydwarfTrophy",
-      "Product": "TrophyGreydwarf",
-      "Amount": 1, 
-      "Type": "Junk", 
-      "resources": [
-        { "item": "GreydwarfEye", "amount": 20 },
-		{ "item": "DustMagic", "amount": 5 }
+      "Name": "Recipe_MythicShardToEssence_Conversion",
+      "Product": "EssenceMythic",
+      "Amount": 1,
+      "Type": "Convert", 
+      "Resources": [
+        { "Item": "ShardMythic", "Amount": 2 },
+        { "Item": "Coins",          "Amount": 4 }
       ]
     },
     {
-      "Name": "Recipe_SkeletonTrophy",
+      "Name": "Recipe_MythicShardToReagent_Conversion",
+      "Product": "ReagentMythic",
+      "Amount": 1,
+      "Type": "Convert", 
+      "Resources": [
+        { "Item": "ShardMythic", "Amount": 2 },
+        { "Item": "Coins",          "Amount": 4 }
+      ]
+    },
+    {
+      "Name": "Recipe_BoneSkeletonTrophy",
       "Product": "TrophySkeleton",
-      "Amount": 1, 
+      "Amount": 1,
       "Type": "Junk", 
-      "resources": [
-        { "item": "BoneFragments", "amount": 20 },
-		{ "item": "DustMagic", "amount": 5 }
+      "Resources": [
+        { "Item": "BoneFragments", "Amount": 10 }
       ]
     },
     {
-      "Name": "Recipe_DraugrTrophy",
-      "Product": "TrophyDraugr",
-      "Amount": 1, 
+      "Name": "Recipe_EyeGreydwarfTrophy",
+      "Product": "TrophyGreydwarf",
+      "Amount": 1,
       "Type": "Junk", 
-      "resources": [
-        { "item": "Entrails", "amount": 20 },
-		{ "item": "DustMagic", "amount": 5 }
+      "Resources": [
+        { "Item": "GreydwarfEye", "Amount": 10 }
       ]
     },
     {
-      "Name": "Recipe_WolfTrophy",
-      "Product": "TrophyWolf",
-      "Amount": 1, 
+      "Name": "Recipe_AntlerDeerTrophy",
+      "Product": "TrophyDeer",
+      "Amount": 1,
       "Type": "Junk", 
-      "resources": [
-        { "item": "WolfHairBundle", "amount": 20 },
-		{ "item": "DustMagic", "amount": 5 }
+      "Resources": [
+        { "Item": "HardAntler", "Amount": 3 }
       ]
     },
     {
-      "Name": "Recipe_GoblinTrophy",
-      "Product": "TrophyGoblin",
-      "Amount": 1, 
+      "Name": "Recipe_HideTrollTrophy",
+      "Product": "TrophyFrostTroll",
+      "Amount": 1,
       "Type": "Junk", 
-      "resources": [
-        { "item": "GoblinScraps_TW", "amount": 20 },
-		{ "item": "DustMagic", "amount": 5 }
+      "Resources": [
+        { "Item": "TrollHide", "Amount": 10 }
+      ]
+    },
+    {
+      "Name": "Recipe_CoreSurtlingTrophy",
+      "Product": "TrophySurtling",
+      "Amount": 1,
+      "Type": "Junk", 
+      "Resources": [
+        { "Item": "SurtlingCore", "Amount": 2 }
+      ]
+    },
+    {
+      "Name": "Recipe_FreezeGlandDrakeTrophy",
+      "Product": "TrophyHatchling",
+      "Amount": 1,
+      "Type": "Junk", 
+      "Resources": [
+        { "Item": "FreezeGland", "Amount": 3 }
+      ]
+    },
+    {
+      "Name": "Recipe_DragonTearRunestone",
+      "Product": "RunestoneLegendary",
+      "Amount": 1,
+      "Type": "Junk", 
+      "Resources": [
+        { "Item": "DragonTear", "Amount": 10 }
+      ]
+    },
+    {
+      "Name": "Recipe_YagluthThingRunestone",
+      "Product": "RunestoneLegendary",
+      "Amount": 1,
+      "Type": "Junk", 
+      "Resources": [
+        { "Item": "YagluthDrop", "Amount": 3 }
+      ]
+    },
+    {
+      "Name": "Recipe_SeekerQueenRunestone",
+      "Product": "RunestoneLegendary",
+      "Amount": 1,
+      "Type": "Junk", 
+      "Resources": [
+        { "Item": "QueenDrop", "Amount": 5 }
+      ]
+    },
+    {
+      "Name": "Recipe_FaderRunestone",
+      "Product": "RunestoneMythic",
+      "Amount": 1,
+      "Type": "Junk", 
+      "Resources": [
+        { "Item": "FaderDrop", "Amount": 5 }
       ]
     }
   ] 

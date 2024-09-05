@@ -126,7 +126,8 @@ namespace EpicLoot.BaseEL
             if (AllowedByItemInfoType(itemData))
                 return true;
 
-            var itemIsStaff = itemData.m_shared.m_itemType == ItemDrop.ItemData.ItemType.TwoHandedWeapon && itemData.m_shared.m_animationState == ItemDrop.ItemData.AnimationState.Staves;
+            var itemIsStaff = itemData.m_shared.m_itemType == ItemDrop.ItemData.ItemType.TwoHandedWeapon &&
+                              itemData.m_shared.m_animationState == ItemDrop.ItemData.AnimationState.Staves;
             if (itemIsStaff && AllowedItemTypes.Contains("Staff"))
                 return true;
 
@@ -139,7 +140,11 @@ namespace EpicLoot.BaseEL
             if (itemData.m_dropPrefab?.name != null)
                 prefabName = itemData.m_dropPrefab.name;
 
-            var typeName = !string.IsNullOrEmpty(prefabName) && GatedItemTypeHelper.ItemInfoByID.TryGetValue(prefabName, out var itemTypeInfo) ? itemTypeInfo.Type : null;
+            var typeName =
+                !string.IsNullOrEmpty(prefabName) &&
+                GatedItemTypeHelper.ItemInfoByID.TryGetValue(prefabName, out var itemTypeInfo)
+                    ? itemTypeInfo.Type
+                    : null;
 
             return !string.IsNullOrEmpty(typeName) && AllowedItemTypes.Contains(typeName);
         }
@@ -155,7 +160,8 @@ namespace EpicLoot.BaseEL
             if (ExcludedByItemInfoType(itemData))
                 return false;
 
-            var itemIsStaff = itemData.m_shared.m_itemType == ItemDrop.ItemData.ItemType.TwoHandedWeapon && itemData.m_shared.m_animationState == ItemDrop.ItemData.AnimationState.Staves;
+            var itemIsStaff = itemData.m_shared.m_itemType == ItemDrop.ItemData.ItemType.TwoHandedWeapon &&
+                              itemData.m_shared.m_animationState == ItemDrop.ItemData.AnimationState.Staves;
             if (itemIsStaff && ExcludedItemTypes.Contains("Staff"))
                 return true;
 
@@ -168,12 +174,17 @@ namespace EpicLoot.BaseEL
             if (itemData.m_dropPrefab?.name != null)
                 prefabName = itemData.m_dropPrefab.name;
 
-            var typeName = !string.IsNullOrEmpty(prefabName) && GatedItemTypeHelper.ItemInfoByID.TryGetValue(prefabName, out var itemTypeInfo) ? itemTypeInfo.Type : null;
+            var typeName =
+                !string.IsNullOrEmpty(prefabName) &&
+                GatedItemTypeHelper.ItemInfoByID.TryGetValue(prefabName, out var itemTypeInfo)
+                    ? itemTypeInfo.Type
+                    : null;
 
             return !string.IsNullOrEmpty(typeName) && ExcludedItemTypes.Contains(typeName);
         }
 
-        public bool CheckRequirements([NotNull] ItemDrop.ItemData itemData, [NotNull] MagicItem magicItem, string magicEffectType = null)
+        public bool CheckRequirements([NotNull] ItemDrop.ItemData itemData, [NotNull] MagicItem magicItem,
+            string magicEffectType = null)
         {
             if (NoRoll)
             {
@@ -216,12 +227,14 @@ namespace EpicLoot.BaseEL
                 return false;
             }
 
-            if (AllowedItemNames?.Count > 0 && !(AllowedItemNames.Contains(itemData.m_shared.m_name) || AllowedItemNames.Contains(itemData.m_dropPrefab?.name)))
+            if (AllowedItemNames?.Count > 0 && !(AllowedItemNames.Contains(itemData.m_shared.m_name) ||
+                                                 AllowedItemNames.Contains(itemData.m_dropPrefab?.name)))
             {
                 return false;
             }
 
-            if (ExcludedItemNames?.Count > 0 && (ExcludedItemNames.Contains(itemData.m_shared.m_name) || ExcludedItemNames.Contains(itemData.m_dropPrefab?.name)))
+            if (ExcludedItemNames?.Count > 0 && (ExcludedItemNames.Contains(itemData.m_shared.m_name) ||
+                                                 ExcludedItemNames.Contains(itemData.m_dropPrefab?.name)))
             {
                 return false;
             }
@@ -271,7 +284,8 @@ namespace EpicLoot.BaseEL
                 return false;
             }
 
-            if (ItemUsesStaminaOnAttack && itemData.m_shared.m_attack.m_attackStamina <= 0 && itemData.m_shared.m_secondaryAttack.m_attackStamina <= 0)
+            if (ItemUsesStaminaOnAttack && itemData.m_shared.m_attack.m_attackStamina <= 0 &&
+                itemData.m_shared.m_secondaryAttack.m_attackStamina <= 0)
             {
                 return false;
             }
@@ -334,20 +348,19 @@ namespace EpicLoot.BaseEL
 
         public bool HasRarityValues()
         {
-            return ValuesPerRarity.Magic != null && ValuesPerRarity.Epic != null && ValuesPerRarity.Rare != null && ValuesPerRarity.Legendary != null;
+            return ValuesPerRarity.Magic != null && ValuesPerRarity.Epic != null && ValuesPerRarity.Rare != null &&
+                   ValuesPerRarity.Legendary != null;
         }
 
         public ValueDef GetValuesForRarity(ItemRarity itemRarity)
         {
             switch (itemRarity)
             {
-                case ItemRarity.Magic:      return ValuesPerRarity.Magic;
-                case ItemRarity.Rare:       return ValuesPerRarity.Rare;
-                case ItemRarity.Epic:       return ValuesPerRarity.Epic;
-                case ItemRarity.Legendary:  return ValuesPerRarity.Legendary;
-                case ItemRarity.Mythic:
-                    // TODO: Mythic Hookup
-                    return null;//ValuesPerRarity.Mythic;
+                case ItemRarity.Magic: return ValuesPerRarity.Magic;
+                case ItemRarity.Rare: return ValuesPerRarity.Rare;
+                case ItemRarity.Epic: return ValuesPerRarity.Epic;
+                case ItemRarity.Legendary: return ValuesPerRarity.Legendary;
+                case ItemRarity.Mythic: return ValuesPerRarity.Mythic;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(itemRarity), itemRarity, null);
             }
@@ -361,7 +374,9 @@ namespace EpicLoot.BaseEL
 
     public static class MagicItemEffectDefinitions
     {
-        public static readonly Dictionary<string, MagicItemEffectDefinition> AllDefinitions = new Dictionary<string, MagicItemEffectDefinition>();
+        public static readonly Dictionary<string, MagicItemEffectDefinition> AllDefinitions =
+            new Dictionary<string, MagicItemEffectDefinition>();
+
         public static event Action OnSetupMagicItemEffectDefinitions;
 
         public static void Initialize(MagicItemEffectsList config)
@@ -371,6 +386,7 @@ namespace EpicLoot.BaseEL
             {
                 Add(magicItemEffectDefinition);
             }
+
             OnSetupMagicItemEffectDefinitions?.Invoke();
         }
 
@@ -392,7 +408,8 @@ namespace EpicLoot.BaseEL
             return effectDef;
         }
 
-        public static List<MagicItemEffectDefinition> GetAvailableEffects(ItemDrop.ItemData itemData, MagicItem magicItem, int ignoreEffectIndex = -1)
+        public static List<MagicItemEffectDefinition> GetAvailableEffects(ItemDrop.ItemData itemData,
+            MagicItem magicItem, int ignoreEffectIndex = -1)
         {
             MagicItemEffect effect = null;
             if (ignoreEffectIndex >= 0 && ignoreEffectIndex < magicItem.Effects.Count)
@@ -401,7 +418,8 @@ namespace EpicLoot.BaseEL
                 magicItem.Effects.RemoveAt(ignoreEffectIndex);
             }
 
-            var results = AllDefinitions.Values.Where(x => x.CheckRequirements(itemData, magicItem) && !EnchantCostsHelper.EffectIsDeprecated(x)).ToList();
+            var results = AllDefinitions.Values.Where(x =>
+                x.CheckRequirements(itemData, magicItem) && !EnchantCostsHelper.EffectIsDeprecated(x)).ToList();
 
             if (effect != null)
             {
@@ -428,6 +446,12 @@ namespace EpicLoot.BaseEL
             }
 
             return effectDef.GetValuesForRarity(rarity) == null;
+        }
+
+        public static List<MagicItemEffectDefinition> ConvertToEffectDefinitions(List<string> typeNames)
+        {
+            return typeNames.Select(typeName => AllDefinitions.ContainsKey(typeName) ? AllDefinitions[typeName] : null)
+                .Where(x => x != null).ToList();
         }
     }
 }
