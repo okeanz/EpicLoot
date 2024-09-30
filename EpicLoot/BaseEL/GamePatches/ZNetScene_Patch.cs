@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace EpicLoot.BaseEL
+namespace EpicLoot.BaseEL.GamePatches
 {
     [HarmonyPatch(typeof(ZNetScene), nameof(ZNetScene.Awake))]
     public static class ZNetScene_Awake_Patch

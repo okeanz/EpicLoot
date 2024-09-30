@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using EpicLoot.BaseEL.Common;
+using EpicLoot.BaseEL.GamePatches;
 
 namespace EpicLoot.BaseEL.LegendarySystem
 {

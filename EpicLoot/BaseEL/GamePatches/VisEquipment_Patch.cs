@@ -4,7 +4,7 @@ using HarmonyLib;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace EpicLoot.BaseEL
+namespace EpicLoot.BaseEL.GamePatches
 {
     public enum FxAttachMode
     {

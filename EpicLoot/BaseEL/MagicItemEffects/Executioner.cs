@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using EpicLoot.BaseEL.Common;
+using EpicLoot.BaseEL.GamePatches;
 using HarmonyLib;
 using JetBrains.Annotations;
 using UnityEngine;

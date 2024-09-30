@@ -3,7 +3,7 @@ using HarmonyLib;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace EpicLoot.BaseEL
+namespace EpicLoot.BaseEL.GamePatches
 {
     public class Multiplayer_Player_Patch
     {

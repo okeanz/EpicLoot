@@ -1,7 +1,7 @@
 ﻿using EpicLoot.BaseEL.Adventure;
 using HarmonyLib;
 
-namespace EpicLoot.BaseEL
+namespace EpicLoot.BaseEL.GamePatches
 {
     [HarmonyPatch(typeof(ZNet), nameof(ZNet.Awake))]
     public static class ZNetPatches

@@ -13,8 +13,9 @@ namespace EpicLoot.Skill;
 public static class Enchanting
 {
     public static EnchantingSkillConfig Config;
-    
+
     public static Skills.SkillType SkillType;
+
     public static void AddEnchantingSkill()
     {
         var item = PrefabManager.Instance.GetPrefab("RunestoneMythic");
@@ -42,13 +43,12 @@ public static class Enchanting
     {
         return Player.m_localPlayer.GetSkillLevel(SkillType);
     }
-    
-    
-    
+
+
     public static void SuccessfulOperation(int targetRarity, OperationType operationType)
     {
         var multiplier = 1f;
-        switch(operationType)
+        switch (operationType)
         {
             case OperationType.Enchant:
                 multiplier = Config.SuccessEnchantSkillMultiplier;
@@ -70,27 +70,28 @@ public static class Enchanting
         }
 
         var raisingValue = multiplier * (targetRarity + 1f);
-        
+
         Logger.LogInfo($"Raising Enchanting: {raisingValue}; multiplier: {multiplier}; targetRarity: {targetRarity}");
-        
+
         Player.m_localPlayer.RaiseSkill(SkillType, raisingValue);
     }
 
-    public static MagicItemEffectDefinition.ValueDef GetSkillCappedValueDef(MagicItemEffectDefinition.ValueDef original, ItemRarity rarity)
+    public static MagicItemEffectDefinition.ValueDef GetSkillCappedValueDef(MagicItemEffectDefinition.ValueDef original,
+        ItemRarity rarity)
     {
         if (original == null || Mathf.Approximately(original.MinValue, original.MaxValue)) return original;
-        
+
         var skillLevel = GetEnchantingSkillLevel();
         var rarityLevel = Config.EnchantLevels[(int) rarity];
         var rarityGap = 100 - rarityLevel;
 
         var distance = (original.MaxValue - original.MinValue) / 2;
-            
+
         var diff = skillLevel - rarityLevel;
         var power = diff / rarityGap;
 
         var offset = distance * power;
-            
+
         return new MagicItemEffectDefinition.ValueDef
         {
             MinValue = original.MinValue + offset,
@@ -107,9 +108,27 @@ public static class Enchanting
         return skillLevel >= Config.EnchantLevels[(int) rarity];
     }
 
+    public static float ClampEffectValue(string effectType, float scale, float totalValue)
+    {
+        var cap = Config.CapEffects.Find(ce => ce.EffectName == effectType);
+
+        if (cap != null)
+        {
+            EpicLootBase.Log(
+                $"GetTotalActiveMagicEffectValue totalBefore: {totalValue}; cap: {cap.Cap * scale}");
+            return Math.Min(totalValue, cap.Cap * scale);
+        }
+
+        return totalValue;
+    }
+
     public enum OperationType
     {
-        Enchant, Disenchant, Augment, Convert, Sacrifice
+        Enchant,
+        Disenchant,
+        Augment,
+        Convert,
+        Sacrifice
     }
 }
 
@@ -122,5 +141,12 @@ public class EnchantingSkillConfig
     public float SuccessAugmentationSkillMultiplier = 1f;
     public float SuccessConvertSkillMultiplier = 1f;
     public float SuccessSacrificeSkillMultiplier = 1f;
-    
+    public List<CapResistance> CapEffects = new();
+}
+
+[Serializable]
+public class CapResistance
+{
+    public string EffectName;
+    public int Cap;
 }

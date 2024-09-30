@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using EpicLoot.BaseEL.GamePatches;
 using EpicLoot.BaseEL.LegendarySystem;
 using EpicLoot.Skill;
 using UnityEngine;
@@ -67,7 +68,7 @@ namespace EpicLoot.BaseEL
 
             var color = GetColorString();
             var tooltip = new StringBuilder();
-            tooltip.Append($"\n<color={color}>");
+            tooltip.Append($" \n\n <color={color}>");
             for (var index = 0; index < Effects.Count; index++)
             {
                 var effect = Effects[index];

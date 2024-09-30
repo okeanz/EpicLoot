@@ -18,7 +18,7 @@ namespace EpicLoot.BaseEL.Crafting
             MagicEffectType.AddFireResistance,
             MagicEffectType.AddFrostResistance,
             MagicEffectType.AddLightningResistance,
-            MagicEffectType.AddChoppingResistancePercentage
+            MagicEffectType.AddChoppingResistancePercentage,
         };
 
         public static void Initialize(EnchantingCostsConfig config)

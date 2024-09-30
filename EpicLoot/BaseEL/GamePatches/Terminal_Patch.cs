@@ -14,7 +14,7 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 using Random = System.Random;
 
-namespace EpicLoot.BaseEL
+namespace EpicLoot.BaseEL.GamePatches
 {
     [HarmonyPatch(typeof(Terminal), nameof(Terminal.InitTerminal))]
     public static class Terminal_Patch

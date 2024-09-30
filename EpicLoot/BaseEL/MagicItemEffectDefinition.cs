@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using EpicLoot.BaseEL.Crafting;
+using EpicLoot.BaseEL.GamePatches;
 using EpicLoot.BaseEL.GatedItemType;
 using EpicLoot.Skill;
 using JetBrains.Annotations;

@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace EpicLoot.BaseEL
+namespace EpicLoot.BaseEL.GamePatches
 {
     [HarmonyPatch(typeof(GameCamera), nameof(GameCamera.UpdateCamera))]
     public static class GameCamera_UpdateCamera_Patch

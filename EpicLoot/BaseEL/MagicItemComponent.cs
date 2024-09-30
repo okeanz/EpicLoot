@@ -10,6 +10,7 @@ using System.Threading;
 using EpicLoot.BaseEL.Common;
 using EpicLoot.BaseEL.Crafting;
 using EpicLoot.BaseEL.Data;
+using EpicLoot.BaseEL.GamePatches;
 using EpicLoot.BaseEL.LegendarySystem;
 using EpicLoot.BaseEL.MagicItemEffects;
 using EpicLoot.Skill;
@@ -483,7 +484,7 @@ namespace EpicLoot.BaseEL
                         : "#808080ff";
                     var skillLevel = Player.m_localPlayer.GetSkillLevel(item.m_shared.m_skillType);
                     text.Append(
-                        $"\n<color={setEffectColor}>({setSize}) ‣ {item.GetSetStatusEffectTooltip(item.m_quality, skillLevel).Replace("\n", " ")}</color>");
+                        $"\n<color={setEffectColor}>({setSize}) ‣ \n\n {item.GetSetStatusEffectTooltip(item.m_quality, skillLevel)}</color>");
                 }
                 else
                 {
@@ -692,6 +693,8 @@ namespace EpicLoot.BaseEL
             {
                 totalValue -= magicItem.GetTotalEffectValue(effectType, scale);
             }
+
+            totalValue = Enchanting.ClampEffectValue(effectType, scale, totalValue);
 
             return totalValue;
         }

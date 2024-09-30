@@ -63,6 +63,7 @@ namespace EpicLoot.BaseEL.Adventure
                 var label = Localization.instance.Localize("$mod_epicloot_treasurechest_name", $"$biome_{Biome.ToString().ToLower()}", (treasureMapInterval + 1).ToString());
                 container.m_name = Localization.instance.Localize(label);
                 container.m_privacy = hasBeenFound ? Container.PrivacySetting.Public : Container.PrivacySetting.Private;
+                container.m_autoDestroyEmpty = true;
             }
 
             var piece = GetComponent<Piece>();

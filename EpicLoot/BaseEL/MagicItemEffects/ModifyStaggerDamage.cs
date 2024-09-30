@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using EpicLoot.BaseEL.GamePatches;
+using HarmonyLib;
 using JetBrains.Annotations;
 
 namespace EpicLoot.BaseEL.MagicItemEffects

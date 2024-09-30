@@ -2,13 +2,14 @@
 using System.Linq;
 using System.Text;
 using EpicLoot.BaseEL.Adventure;
+using EpicLoot.Skill;
 using HarmonyLib;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-namespace EpicLoot.BaseEL
+namespace EpicLoot.BaseEL.GamePatches
 {
     [HarmonyPatch(typeof(TextsDialog), nameof(TextsDialog.UpdateTextsList))]
     public static class TextsDialog_UpdateTextsList_Patch
@@ -56,6 +57,7 @@ namespace EpicLoot.BaseEL
                 var effectType = entry.Key;
                 var effectDef = MagicItemEffectDefinitions.Get(effectType);
                 var sum = entry.Value.Sum(x => x.Key.EffectValue);
+                sum = Enchanting.ClampEffectValue(effectType, 1, sum);
                 var totalEffectText = MagicItem.GetEffectText(effectDef, sum);
                 var highestRarity = (ItemRarity) entry.Value.Max(x => (int) x.Value.GetRarity());
 

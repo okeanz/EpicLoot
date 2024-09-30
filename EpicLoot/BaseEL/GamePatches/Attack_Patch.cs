@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace EpicLoot.BaseEL
+namespace EpicLoot.BaseEL.GamePatches
 {
     [HarmonyPatch]
     public static class Attack_Patch

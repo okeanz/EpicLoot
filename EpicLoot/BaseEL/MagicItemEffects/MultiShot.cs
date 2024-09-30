@@ -19,25 +19,21 @@ namespace EpicLoot.BaseEL.MagicItemEffects
             var player = (Player)__instance.m_character;
             var doubleShot = player.HasActiveMagicEffect(MagicEffectType.DoubleMagicShot);
             var tripleShot = player.HasActiveMagicEffect(MagicEffectType.TripleBowShot);
-            if (!doubleShot && !tripleShot)
-                return;
 
-            var itemType = __instance.GetWeapon()?.m_shared.m_itemType;
-            var skillType = __instance.GetWeapon()?.m_shared.m_skillType;
-
-            if (doubleShot && itemType == ItemDrop.ItemData.ItemType.TwoHandedWeapon && skillType == Skills.SkillType.ElementalMagic)
+            
+            if (tripleShot)
             {
                 // The accuracy on the fireball staff is 1, so the projectiles appear right on top of each other,
                 // this forces them to appear distinct and still feels good (greater AOE in lieu of accuracy)
                 if (__instance.m_projectileAccuracy < 2)
                     __instance.m_projectileAccuracy = 2;
-                __instance.m_projectiles = 2;
+                __instance.m_projectiles = 3;
             }
-            else if (tripleShot && itemType == ItemDrop.ItemData.ItemType.Bow && (skillType == Skills.SkillType.Bows || skillType == Skills.SkillType.Crossbows))
+            else if (doubleShot)
             {
                 if (__instance.m_projectileAccuracy < 2)
                     __instance.m_projectileAccuracy = 2;
-                __instance.m_projectiles = 3;
+                __instance.m_projectiles = 2;
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using HarmonyLib;
 
-namespace EpicLoot.BaseEL
+namespace EpicLoot.BaseEL.GamePatches
 {
     //public void AddDefaultItems()
     [HarmonyPatch(typeof(Container), nameof(Container.AddDefaultItems))]

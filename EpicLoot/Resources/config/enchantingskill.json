@@ -3,5 +3,15 @@
   "successEnchantSkillMultiplier": 10,
   "successDisenchantSkillMultiplier": 8,
   "successAugmentationSkillMultiplier": 6,
-  "successConvertSkillMultiplier": 5
+  "successConvertSkillMultiplier": 5,
+  "capEffects": [
+    {
+      "effectName": "AddElementalResistancePercentage",
+      "cap": 0.6
+    },
+    {
+      "effectName": "AddPhysicalResistancePercentage",
+      "cap": 0.6
+    }
+  ]
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using HarmonyLib;
 using UnityEngine;
 
-namespace EpicLoot.BaseEL
+namespace EpicLoot.BaseEL.GamePatches
 {
     public static class EpicLootDropsHelper
     {
@@ -35,7 +35,7 @@ namespace EpicLoot.BaseEL
                 return;
             }
 
-            if (!EpicLootBase.CanCharacterDropLoot(characterDrop.m_character))
+            if (!EpicLootBase.CanDropLoot(characterDrop))
             {
                 return;
             }

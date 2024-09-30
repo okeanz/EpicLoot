@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace EpicLoot.BaseEL
+namespace EpicLoot.BaseEL.GamePatches
 {
     [HarmonyPatch(typeof(ObjectDB), nameof(ObjectDB.CopyOtherDB))]
     public static class ObjectDB_CopyOtherDB_Patch

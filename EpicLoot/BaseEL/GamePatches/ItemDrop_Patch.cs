@@ -1,7 +1,7 @@
 ﻿using EpicLoot.BaseEL.LootBeams;
 using HarmonyLib;
 
-namespace EpicLoot.BaseEL
+namespace EpicLoot.BaseEL.GamePatches
 {
     [HarmonyPatch(typeof(ItemDrop), nameof(ItemDrop.Awake))]
     public static class ItemDrop_Awake_Patch

@@ -1,4 +1,5 @@
 ﻿using System;
+using EpicLoot.BaseEL.GamePatches;
 using EpicLoot.BaseEL.Healing;
 using HarmonyLib;
 

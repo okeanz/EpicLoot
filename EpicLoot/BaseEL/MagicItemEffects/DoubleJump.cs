@@ -62,15 +62,6 @@ namespace EpicLoot.BaseEL.MagicItemEffects
                 if (IsJumping && IsDoubleJumping)
                 {
                     UseDoubleJumpCharge(__instance);
-
-                    var audioSource = __instance.GetComponent<AudioSource>();
-                    if (audioSource == null)
-                    {
-                        audioSource = __instance.gameObject.AddComponent<AudioSource>();
-                        audioSource.outputAudioMixerGroup = AudioMan.instance.m_ambientMixer;
-                    }
-
-                    audioSource.PlayOneShot(EpicLootBase.Assets.DoubleJumpSFX);
                 }
             }
         }

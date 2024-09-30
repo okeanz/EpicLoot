@@ -1133,7 +1133,7 @@ namespace EpicLoot.BaseEL
 
         public static void OnCharacterDeath(CharacterDrop characterDrop)
         {
-            if (!CanCharacterDropLoot(characterDrop.m_character))
+            if (!CanDropLoot(characterDrop))
             {
                 return;
             }
@@ -1145,9 +1145,9 @@ namespace EpicLoot.BaseEL
             OnCharacterDeath(characterName, level, dropPoint);
         }
 
-        public static bool CanCharacterDropLoot(Character character)
+        public static bool CanDropLoot(CharacterDrop characterDrop)
         {
-            return character != null && !character.IsTamed();
+            return characterDrop.m_dropsEnabled && characterDrop.m_character != null && !characterDrop.m_character.IsTamed();
         }
 
         public static void OnCharacterDeath(string characterName, int level, Vector3 dropPoint)

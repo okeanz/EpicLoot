@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace EpicLoot.BaseEL
+namespace EpicLoot.BaseEL.GamePatches
 {
     [HarmonyPatch(typeof(Humanoid))]
     public class Humanoid_Patch
